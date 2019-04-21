@@ -31,7 +31,24 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.androidx.appcompat
     implementation deps.androidx.core
-    implementation deps.androidx.constraint
+    implementation deps.androidx.constraintLayout
+    implementation deps.androidx.fragment
+    implementation deps.androidx.viewmodel
+    implementation deps.androidx.annotations
+    implementation deps.androidx.recyclerView
+    implementation deps.androidx.cardView
+    implementation deps.androidx.design
+    implementation deps.androidx.navigationFragment
+    implementation deps.androidx.navigationUI
+    implementation deps.external.rxjava2
+    implementation deps.external.rxandroid2
+    implementation deps.external.retrofit
+    implementation deps.external.gson
+    implementation deps.external.glide
+
+    kapt deps.kapt.room
+    kapt deps.kapt.glide
+
     testImplementation deps.test.junit
     androidTestImplementation deps.test.instrumentationTestRunner
     androidTestImplementation deps.test.espresso
