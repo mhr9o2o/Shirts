@@ -43,6 +43,7 @@ dependencies {
     implementation deps.external.rxjava2
     implementation deps.external.rxandroid2
     implementation deps.external.retrofit
+    implementation deps.external.retrofitRxJavaAdapter
     implementation deps.external.gson
     implementation deps.external.glide
 
