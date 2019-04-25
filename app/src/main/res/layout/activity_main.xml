@@ -7,7 +7,22 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.MainActivity">
 
+    <fragment
+            android:id="@+id/activity_main_root_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation" />
 
+    <fragment
+            android:id="@+id/activity_main_bottom_sheet_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            app:navGraph="@navigation/bottom_sheet_navigation" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
