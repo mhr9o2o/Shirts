@@ -1,6 +1,6 @@
 package com.mhr.shirts.data.data_models
 
-data class Shirt(val id: Int, val name: String, val price: Int, val colour: String, val quantity: Int, val size: String, val picture: String)
+data class Shirt(val id: Int?, val name: String?, val price: Int?, val colour: String?, val quantity: Int?, val size: String?, val picture: String?)
 {
 
     //region Overridden Functions
@@ -13,6 +13,10 @@ data class Shirt(val id: Int, val name: String, val price: Int, val colour: Stri
         {
             return false
         }
+    }
+
+    override fun hashCode(): Int {
+        return id ?: 0
     }
     //endregion
 }

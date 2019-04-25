@@ -54,6 +54,30 @@ class ShirtTest {
         assertEquals(convertedModel.name, "Southview Clarke")
         assertEquals(convertedModel.quantity,2)
     }
+
+    @Test
+    fun testingNullSafety()
+    {
+        val json = "{\n" +
+                "    \"id\": null,\n" +
+                "    \"price\": null,\n" +
+                "    \"picture\": null,\n" +
+                "    \"colour\": null,\n" +
+                "    \"size\": null,\n" +
+                "    \"name\": null,\n" +
+                "    \"quantity\": null\n" +
+                "  }"
+        val gson = Gson()
+        val convertedModel: Shirt = gson.fromJson(json, Shirt::class.java)
+        assertEquals(convertedModel.id, null)
+        assertEquals(convertedModel.price,null)
+        assertEquals(convertedModel.picture,null)
+        assertEquals(convertedModel.colour,null)
+        assertEquals(convertedModel.size,null)
+        assertEquals(convertedModel.name, null)
+        assertEquals(convertedModel.quantity,null)
+
+    }
     //endregion
 
 }
