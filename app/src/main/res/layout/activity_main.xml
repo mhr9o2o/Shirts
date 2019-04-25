@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
+            app:behavior_peekHeight="@dimen/height_actionbar"
             app:layout_behavior="@string/bottom_sheet_behavior"
             app:navGraph="@navigation/bottom_sheet_navigation" />
 
