@@ -1,7 +1,8 @@
-package com.mhr.shirts
+package com.mhr.shirts.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mhr.shirts.R
 
 class MainActivity : AppCompatActivity() {
 
