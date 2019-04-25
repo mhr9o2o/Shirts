@@ -5,7 +5,7 @@
             app:startDestination="@id/shirtsFragment">
 
     <fragment android:id="@+id/shirtsFragment" android:name="com.mhr.shirts.ui.units.shirts.ShirtsFragment"
-              android:label="shirts_fragment" tools:layout="@layout/shirts_fragment">
+              android:label="shirts_fragment" tools:layout="@layout/fragment_shirts">
         <action android:id="@+id/action_shirtsFragment_to_shirtDetailFragment"
                 app:destination="@id/shirtDetailFragment" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" app:enterAnim="@anim/nav_default_enter_anim"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment android:id="@+id/shirtDetailFragment"
               android:name="com.mhr.shirts.ui.units.shirt_detail.ShirtDetailFragment"
-              android:label="shirt_detail_fragment" tools:layout="@layout/shirt_detail_fragment">
+              android:label="shirt_detail_fragment" tools:layout="@layout/fragment_shirt_detail">
         <argument android:name="shirt_id" app:argType="integer"/>
     </fragment>
 </navigation>

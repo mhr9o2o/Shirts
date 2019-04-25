@@ -5,5 +5,5 @@
             app:startDestination="@id/basketFragment">
 
     <fragment android:id="@+id/basketFragment" android:name="com.mhr.shirts.ui.units.basket.BasketFragment"
-              android:label="basket_fragment" tools:layout="@layout/basket_fragment"/>
+              android:label="basket_fragment" tools:layout="@layout/fragment_basket"/>
 </navigation>

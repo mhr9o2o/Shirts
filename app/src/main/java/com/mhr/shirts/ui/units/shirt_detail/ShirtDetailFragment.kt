@@ -21,7 +21,7 @@ class ShirtDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.shirt_detail_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_shirt_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
