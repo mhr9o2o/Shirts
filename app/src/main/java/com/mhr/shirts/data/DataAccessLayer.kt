@@ -131,6 +131,14 @@ class DataAccessLayer(context: Context) {
                 ))
         }
     }
+
+    fun getShirtBy(id: Int) : Observable<Shirt>
+    {
+        return Observable.fromCallable {
+            database!!.shirtDao().getShirt(id)
+        }
+    }
+
     //endregion
 
     //region Basket
