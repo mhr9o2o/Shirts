@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 
 import com.mhr.shirts.R
@@ -14,7 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ShirtsFragment : Fragment() {
+class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
 
     //region Fields
     companion object {
@@ -58,7 +59,7 @@ class ShirtsFragment : Fragment() {
     private fun initViews(rootView: View)
     {
         shirts = mutableListOf()
-        adapter = ShirtsAdapter(shirts)
+        adapter = ShirtsAdapter(shirts, this)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.fragment_shirts_recycler_view)
         recyclerView.adapter = adapter
     }
@@ -97,6 +98,17 @@ class ShirtsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         unBind()
+    }
+    //endregion
+
+    //region Listeners
+    override fun onSelect(shirt: Shirt) {
+        shirt.id.let {
+            val bundle = Bundle()
+            bundle.putInt("shirt_id", id)
+            Navigation.findNavController(view!!).navigate(R.id.action_shirtsFragment_to_shirtDetailFragment, bundle)
+        }
+
     }
     //endregion
 

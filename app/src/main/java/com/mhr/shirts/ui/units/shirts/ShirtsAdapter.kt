@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
 
-class ShirtsAdapter(private val shirts: List<Shirt>): RecyclerView.Adapter<ShirtsAdapter.ShirtViewHolder>() {
+class ShirtsAdapter(private val shirts: List<Shirt>, private val shirtSelectListener: OnShirtSelectListener): RecyclerView.Adapter<ShirtsAdapter.ShirtViewHolder>() {
 
     //region Overridden Functions
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShirtViewHolder {
@@ -29,6 +29,16 @@ class ShirtsAdapter(private val shirts: List<Shirt>): RecyclerView.Adapter<Shirt
     //region ViewHolder
     inner class ShirtViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
+
+        init {
+            itemView.setOnClickListener {
+                if (adapterPosition != -1 && adapterPosition < shirts.size)
+                {
+                    shirtSelectListener.onSelect(shirts[adapterPosition])
+                }
+            }
+        }
+
         fun bindView(position: Int)
         {
             if (position != -1 && position < shirts.size)
@@ -48,6 +58,11 @@ class ShirtsAdapter(private val shirts: List<Shirt>): RecyclerView.Adapter<Shirt
 
             }
         }
+    }
+
+    interface OnShirtSelectListener
+    {
+        fun onSelect(shirt: Shirt)
     }
     //endregion
 
