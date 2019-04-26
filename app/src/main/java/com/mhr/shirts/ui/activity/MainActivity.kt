@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
         initData()
-        
+
     }
 
     override fun onStop() {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region Functions
-    fun initViews()
+    private fun initViews()
     {
         val bottomSheetView: View = findViewById(R.id.activity_main_bottom_sheet_fragment)
         val rootView: View = findViewById(R.id.activity_main_root_fragment)
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         bottomSheetBehavior = behavior
     }
 
-    fun initData()
+    private fun initData()
     {
         dataAccessLayer = DataAccessLayer(this)
     }
