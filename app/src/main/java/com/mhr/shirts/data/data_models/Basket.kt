@@ -6,5 +6,5 @@ import com.google.gson.annotations.Expose
 
 @Entity
 data class Basket(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @PrimaryKey val id: Int = 0,
     @Expose val shirts: List<Shirt> = emptyList())
