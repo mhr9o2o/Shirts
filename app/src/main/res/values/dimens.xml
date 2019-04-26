@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="height_actionbar">56dp</dimen>
+    <dimen name="height_action_button">48dp</dimen>
+    <dimen name="height_shirt_item">240dp</dimen>
+    <dimen name="height_shirt_detail_name">48dp</dimen>
+    <dimen name="height_shirt_detail_price">32dp</dimen>
+    <dimen name="height_shirt_detail_size_colour">56</dimen>
+    <dimen name="height_shirt_detail_box">184dp</dimen>
+    <dimen name="height_basket_shirt_item">72dp</dimen>
+    <dimen name="size_basket_plus_button">48dp</dimen>
+    <dimen name="size_basket_minus_button">48dp</dimen>
+    <dimen name="size_basket_remove_button">48dp</dimen>
 </resources>
