@@ -250,7 +250,7 @@ class DataAccessLayer(context: Context) {
     //region Lifecycle-wise Functions
     fun dispose()
     {
-        disposables.dispose()
+        disposables.clear()
     }
     //endregion
 

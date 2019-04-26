@@ -27,8 +27,9 @@ def versions = [
 ]
 
 // In case of using Dagger:
-// daggerCompiler:"com.google.dagger:dagger-compiler${versions.dagger}"
+//
 def kapt = [
+    daggerCompiler          : "com.google.dagger:dagger-compiler:${versions.dagger}",
     room                    : "android.arch.persistence.room:compiler:${versions.room}",
     glide                   : "com.github.bumptech.glide:compiler:${versions.glide}"
 ]

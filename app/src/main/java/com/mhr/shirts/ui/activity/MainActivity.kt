@@ -2,17 +2,18 @@ package com.mhr.shirts.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mhr.shirts.R
 import com.mhr.shirts.data.DataAccessLayer
+import com.mhr.shirts.di.DaggerDataComponent
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     //region Fields
-    var dataAccessLayer: DataAccessLayer? = null
+    @Inject
+    lateinit var dataAccessLayer: DataAccessLayer
     var bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED
     var bottomSheetBehavior: BottomSheetBehavior<View>? = null
     //endregion
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        dataAccessLayer?.dispose()
+        dataAccessLayer.dispose()
     }
 
     override fun onBackPressed() {
@@ -67,7 +68,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData()
     {
-        dataAccessLayer = DataAccessLayer(this)
+        DaggerDataComponent.builder()
+            .context(this)
+            .build()
     }
     //endregion
 }

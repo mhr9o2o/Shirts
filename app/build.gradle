@@ -48,11 +48,14 @@ dependencies {
     implementation deps.external.gson
     implementation deps.external.glide
     implementation deps.external.room
+    implementation deps.external.dagger
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
+
     kapt deps.kapt.room
     kapt deps.kapt.glide
+    kapt deps.kapt.daggerCompiler
 
     testImplementation deps.test.junit
     androidTestImplementation deps.test.instrumentationTestRunner
