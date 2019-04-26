@@ -25,7 +25,7 @@ interface ShirtDao {
     fun filterShirtsByColour(colour: String) : List<Shirt>
 
     @Query("SELECT * FROM Shirt WHERE size == :size")
-    fun filterShirtsBySize(size: String)
+    fun filterShirtsBySize(size: String) : List<Shirt>
 
     @Query("SELECT * FROM Shirt WHERE id == :id")
     fun getShirt(id: Int) : Shirt

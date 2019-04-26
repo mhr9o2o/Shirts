@@ -7,7 +7,11 @@ import com.mhr.shirts.data.database.AppDataBase
 import com.mhr.shirts.data.database.dao.BasketDao
 import com.mhr.shirts.data.database.dao.ShirtDao
 import com.mhr.shirts.network.NetworkAccessLayer
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
 class DataAccessLayer(context: Context) {
@@ -15,6 +19,7 @@ class DataAccessLayer(context: Context) {
     //region Subjects
     val shirts: PublishSubject<List<Shirt>> = PublishSubject.create()
     val basket: PublishSubject<Basket> = PublishSubject.create()
+    val errors: PublishSubject<String> = PublishSubject.create()
     //endregion
 
     //region DataBase
@@ -28,6 +33,11 @@ class DataAccessLayer(context: Context) {
     private val disposables: CompositeDisposable = CompositeDisposable()
     //endregion
 
+    //region Fields
+    val sizes: MutableList<String> = mutableListOf()
+    val colours: MutableList<String> = mutableListOf()
+    //endregion
+
     //region Initializer
     init {
         database = AppDataBase.getAppDataBase(context)
@@ -37,7 +47,138 @@ class DataAccessLayer(context: Context) {
     }
     //endregion
 
+    //region Static Identifiers
+    companion object
+    {
+        val FILTER_NONE = "None"
+    }
+    //endregion
+
     //region Access Functions
+    fun fetchShirts()
+    {
+
+        fetchAndPublishShirtsFromDataBase(true)
+
+        disposables.add(fetchShirtsFromServer()!!
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+            {
+                updateShirts(it, false)
+                shirts.onNext(it)
+            },
+            {
+                it.message?.let { message -> errors.onNext(message) }
+            }
+        ))
+    }
+
+    fun filterShirts(size: String, colour: String)
+    {
+        if (size == FILTER_NONE && colour == FILTER_NONE)
+        {
+            fetchAndPublishShirtsFromDataBase(false)
+        }
+        else if (size == FILTER_NONE)
+        {
+            disposables.add(Observable.fromCallable {
+                database!!.shirtDao().filterShirtsByColour(colour)
+            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        shirts.onNext(it)
+                    },
+                    {
+                        it.message?.let { message -> errors.onNext(message) }
+                    }
+                ))
+        }
+        else if (colour == FILTER_NONE)
+        {
+            disposables.add(Observable.fromCallable {
+                database!!.shirtDao().filterShirtsBySize(size)
+            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        shirts.onNext(it)
+                    },
+                    {
+                        it.message?.let { message -> errors.onNext(message) }
+                    }
+                ))
+        }
+        else
+        {
+            disposables.add(Observable.fromCallable {
+                database!!.shirtDao().filterShirtsByColourAndSize(colour, size)
+            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        shirts.onNext(it)
+                    },
+                    {
+                        it.message?.let { message -> errors.onNext(message) }
+                    }
+                ))
+        }
+    }
+    //endregion
+
+    //region Inner Data Functions
+    private fun fetchShirtsFromServer() : Observable<List<Shirt>>?
+    {
+        return networkAccessLayer?.fetchAllShirts()
+    }
+
+    private fun retrieveShirtsFromDataBase() : Observable<List<Shirt>>
+    {
+        return Observable.fromCallable {
+            database!!.shirtDao().getShirts()
+        }
+    }
+
+    private fun fetchAndPublishShirtsFromDataBase(shouldUpdate: Boolean)
+    {
+        disposables.add(retrieveShirtsFromDataBase()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+            {
+                if (shouldUpdate) updateShirts(it, true)
+                shirts.onNext(it)
+            },
+            {
+                it.message?.let { message -> errors.onNext(message) }
+            }
+        ))
+    }
+
+    private fun updateShirts(shirts: List<Shirt>, isCachedData: Boolean)
+    {
+        for (shirt in shirts)
+        {
+            if (!sizes.contains(shirt.size) && shirt.size != null) sizes.add(shirt.size)
+            if (!colours.contains(shirt.colour) && shirt.colour != null) colours.add(shirt.colour)
+            if (!isCachedData) updateDataBase(shirt)
+        }
+    }
+
+    private fun updateDataBase(shirt: Shirt)
+    {
+        shirtDao!!.insertShirt(shirt)
+    }
+
+    private fun updateDataBase(basket: Basket)
+    {
+        basketDao!!.insertBasket(basket)
+    }
     //endregion
 
     //region Lifecycle-wise Functions
