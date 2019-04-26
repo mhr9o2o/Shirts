@@ -15,6 +15,6 @@
     <fragment android:id="@+id/shirtDetailFragment"
               android:name="com.mhr.shirts.ui.units.shirt_detail.ShirtDetailFragment"
               android:label="shirt_detail_fragment" tools:layout="@layout/fragment_shirt_detail">
-        <argument android:name="shirt_id" app:argType="integer"/>
+        <argument android:name="shirt" app:argType="com.mhr.shirts.data.data_models.Shirt"/>
     </fragment>
 </navigation>

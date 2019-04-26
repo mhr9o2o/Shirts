@@ -91,7 +91,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/fragment_shirt_add_button"
+                        android:id="@+id/fragment_shirt_detail_add_button"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_action_button"
                         android:text="@string/action_add_to_cart"

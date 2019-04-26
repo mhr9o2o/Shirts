@@ -105,7 +105,7 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     override fun onSelect(shirt: Shirt) {
         shirt.id.let {
             val bundle = Bundle()
-            bundle.putInt("shirt_id", id)
+            bundle.putParcelable("shirt", shirt)
             Navigation.findNavController(view!!).navigate(R.id.action_shirtsFragment_to_shirtDetailFragment, bundle)
         }
 
