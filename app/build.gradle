@@ -46,10 +46,10 @@ dependencies {
     implementation deps.external.retrofitRxJavaAdapter
     implementation deps.external.gson
     implementation deps.external.glide
+    implementation deps.external.room
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-beta01'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
     kapt deps.kapt.room
     kapt deps.kapt.glide
 

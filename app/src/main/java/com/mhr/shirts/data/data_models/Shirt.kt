@@ -1,6 +1,18 @@
 package com.mhr.shirts.data.data_models
 
-data class Shirt(val id: Int?, val name: String?, val price: Int?, val colour: String?, val quantity: Int?, val size: String?, val picture: String?)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
+
+@Entity
+data class Shirt(
+    @Expose @PrimaryKey val id: Int?,
+    @Expose val name: String?,
+    @Expose val price: Int?,
+    @Expose val colour: String?,
+    @Expose val quantity: Int?,
+    @Expose val size: String?,
+    @Expose val picture: String?)
 {
 
     //region Overridden Functions

@@ -1,8 +1,11 @@
 package com.mhr.shirts.network.models.request
 
+import com.google.gson.annotations.Expose
 import com.mhr.shirts.data.data_models.Basket
 
-data class OrderRequest(val total: Int = 0, val basket: Basket) {
+data class OrderRequest(
+    @Expose val total: Int = 0,
+    @Expose val basket: Basket) {
 
     fun validate(): Boolean
     {
