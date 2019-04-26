@@ -5,10 +5,19 @@
     <dimen name="height_shirt_item">240dp</dimen>
     <dimen name="height_shirt_detail_name">48dp</dimen>
     <dimen name="height_shirt_detail_price">32dp</dimen>
-    <dimen name="height_shirt_detail_size_colour">56</dimen>
+    <dimen name="height_shirt_detail_size_colour">56dp</dimen>
+    <dimen name="margin_shirt_detail_divider">4dp</dimen>
     <dimen name="height_shirt_detail_box">184dp</dimen>
+    <dimen name="height_shirt_detail_box_holder">200dp</dimen>
+    <dimen name="margin_bottom_shirt_detail_box_holder">16dp</dimen>
+    <dimen name="margin_shirt_detail_box">8dp</dimen>
+    <dimen name="padding_side_detail_texts">8dp</dimen>
     <dimen name="height_basket_shirt_item">72dp</dimen>
     <dimen name="size_basket_plus_button">48dp</dimen>
     <dimen name="size_basket_minus_button">48dp</dimen>
     <dimen name="size_basket_remove_button">48dp</dimen>
+    <!-- Text Sizes -->
+    <dimen name="size_text_shirt_name">18sp</dimen>
+    <dimen name="size_text_shirt_price">14sp</dimen>
+    <dimen name="size_text_shirt_size_colour">14sp</dimen>
 </resources>

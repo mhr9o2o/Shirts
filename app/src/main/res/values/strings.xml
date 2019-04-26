@@ -3,17 +3,19 @@
 
     <!-- Errors -->
     <string name="error_network">Unable to connect to the server!</string>
+    <string name="error_availability">No more available item to add! ☹</string>
     
     <!-- Actions-->
     <string name="action_retry">Retry</string>
     <string name="action_submit">Submit your Order</string>
+    <string name="action_add_to_cart">Add to Basket</string>
     
     <!-- Fields -->
-    <string name="text_price">Price: </string>
-    <string name="text_colour">Colour: </string>
-    <string name="text_size">Size: </string>
+    <string name="text_price">Price: %v € </string>
+    <string name="text_colour">Colour:\n%v </string>
+    <string name="text_size">Size:\n%v </string>
     <string name="text_basket">Your Basket</string>
-    <string name="text_total">Total Cost: </string>
+    <string name="text_total">Total Cost: %v € </string>
     <string name="text_filter_size">SIZE</string>
     <string name="text_filter_colour">COLOUR</string>
     <string name="text_filter_none">None</string>

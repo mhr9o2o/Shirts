@@ -1,14 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="match_parent"
         tools:context=".ui.units.shirt_detail.ShirtDetailFragment">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragment_shirt_detail_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello"/>
+            android:scaleType="centerCrop"/>
 
-</FrameLayout>
+
+    <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_shirt_detail_box_holder"
+            android:layout_marginBottom="@dimen/margin_bottom_shirt_detail_box_holder">
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"/>
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_shirt_detail_box"
+                android:layout_weight="0.8"
+                android:layout_margin="@dimen/margin_shirt_detail_box"
+                app:cardCornerRadius="0dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_shirt_detail_name_text_view"
+                        android:textSize="@dimen/size_text_shirt_name"
+                        android:textColor="@color/title"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/padding_side_detail_texts"
+                        android:paddingEnd="@dimen/padding_side_detail_texts"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_shirt_detail_name"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_shirt_detail_price_text_view"
+                        android:text="@string/text_price"
+                        android:textSize="@dimen/size_text_shirt_price"
+                        android:textColor="@color/body"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/padding_side_detail_texts"
+                        android:paddingEnd="@dimen/padding_side_detail_texts"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_shirt_detail_price"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_shirt_detail_size_colour"
+                        android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_shirt_detail_size_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="@string/text_size"
+                            android:textColor="@color/body"
+                            android:gravity="center"/>
+
+                    <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorAccent"
+                            android:layout_margin="@dimen/margin_shirt_detail_divider"/>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_shirt_detail_colour_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="@string/text_colour"
+                            android:textColor="@color/body"
+                            android:gravity="center"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/fragment_shirt_add_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_action_button"
+                        android:text="@string/action_add_to_cart"
+                        android:background="@color/positive"
+                        android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
