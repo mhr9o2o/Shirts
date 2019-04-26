@@ -3,6 +3,9 @@
     <dimen name="height_actionbar">56dp</dimen>
     <dimen name="height_action_button">48dp</dimen>
     <dimen name="height_shirt_item">240dp</dimen>
+    <dimen name="height_filter_bar">64dp</dimen>
+    <dimen name="margin_shirts_filter_divider">4dp</dimen>
+    <dimen name="margin_top_shirts_recycler_view">-8dp</dimen>
     <dimen name="height_shirt_detail_name">48dp</dimen>
     <dimen name="height_shirt_detail_price">32dp</dimen>
     <dimen name="height_shirt_detail_size_colour">56dp</dimen>

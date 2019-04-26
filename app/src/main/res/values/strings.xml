@@ -16,8 +16,9 @@
     <string name="text_size">Size:\n%v </string>
     <string name="text_basket">Your Basket</string>
     <string name="text_total">Total Cost: %v € </string>
-    <string name="text_filter_size">SIZE</string>
-    <string name="text_filter_colour">COLOUR</string>
+    <string name="text_filter_size">SIZE\n%v</string>
+    <string name="text_filter_colour">COLOUR\n%v</string>
     <string name="text_filter_none">None</string>
+    <string name="text_filter_all">ALL</string>
 
 </resources>
