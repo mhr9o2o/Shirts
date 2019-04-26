@@ -1,5 +1,7 @@
 package com.mhr.shirts.di
 
+import android.content.Context
+import com.mhr.shirts.MyApplication
 import com.mhr.shirts.ui.activity.MainActivity
 import com.mhr.shirts.ui.units.basket.BasketModel
 import com.mhr.shirts.ui.units.shirt_detail.ShirtDetailModel
@@ -21,7 +23,7 @@ interface DataComponent {
     interface Builder
     {
         @BindsInstance
-        fun context(mainActivity: MainActivity): Builder
+        fun context(context: MyApplication): Builder
         fun build(): DataComponent
     }
 

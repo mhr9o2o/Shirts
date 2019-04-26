@@ -1,6 +1,7 @@
 package com.mhr.shirts.di
 
 import android.content.Context
+import com.mhr.shirts.MyApplication
 import com.mhr.shirts.data.DataAccessLayer
 import com.mhr.shirts.ui.activity.MainActivity
 import dagger.Module
@@ -12,9 +13,9 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideContext(mainActivity: MainActivity) : Context
+    fun provideContext(myApplication: MyApplication) : Context
     {
-        return mainActivity
+        return myApplication
     }
 
     @Provides

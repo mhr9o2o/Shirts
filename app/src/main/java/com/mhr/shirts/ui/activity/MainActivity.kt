@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
+import com.mhr.shirts.MyApplication
 import com.mhr.shirts.R
 import com.mhr.shirts.data.DataAccessLayer
 import com.mhr.shirts.di.DaggerDataComponent
@@ -70,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData()
     {
-        DaggerDataComponent.builder()
-            .context(this)
-            .build().inject(this)
+        MyApplication.instance.dataComponent.inject(this)
     }
     //endregion
 }
