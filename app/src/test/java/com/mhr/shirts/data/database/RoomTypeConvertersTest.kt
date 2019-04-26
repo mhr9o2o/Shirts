@@ -1,5 +1,6 @@
-package com.mhr.shirts.data.data_models
+package com.mhr.shirts.data.database
 
+import com.mhr.shirts.data.data_models.Shirt
 import org.junit.Test
 
 import org.junit.Assert.*

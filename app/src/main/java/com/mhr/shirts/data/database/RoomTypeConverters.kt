@@ -1,8 +1,9 @@
-package com.mhr.shirts.data.data_models
+package com.mhr.shirts.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.mhr.shirts.data.data_models.Shirt
 
 class RoomTypeConverters {
 
