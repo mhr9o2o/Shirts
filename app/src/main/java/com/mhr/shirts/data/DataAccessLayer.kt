@@ -50,11 +50,13 @@ class DataAccessLayer(context: Context) {
     //region Static Identifiers
     companion object
     {
-        val FILTER_NONE = "None"
+        const val FILTER_NONE = "None"
     }
     //endregion
 
     //region Access Functions
+
+    //region Shirts
     fun fetchShirts()
     {
 
@@ -131,6 +133,62 @@ class DataAccessLayer(context: Context) {
     }
     //endregion
 
+    //region Basket
+    fun fetchBasket()
+    {
+        disposables.add(Observable.fromCallable {
+            database!!.basketDao().getBasket()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    basket.onNext(it)
+                },
+                {
+                    it.message?.let { message -> errors.onNext(message) }
+                }
+            ))
+    }
+
+    fun clearBasket(basket: Basket)
+    {
+        disposables.add(Observable.fromCallable {
+            database!!.basketDao().deleteBasket(basket)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    this.basket.onNext(Basket())
+                },
+                {
+                    it.message?.let { message -> errors.onNext(message) }
+                }
+            ))
+    }
+
+    fun updateDataBasket(basket: Basket)
+    {
+        disposables.add(Observable.fromCallable {
+            database!!.basketDao().insertBasket(basket)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    this.basket.onNext(Basket())
+                },
+                {
+                    it.message?.let { message -> errors.onNext(message) }
+                }
+            ))
+        basketDao!!.insertBasket(basket)
+    }
+    //endregion
+
+    //endregion
+
     //region Inner Data Functions
     private fun fetchShirtsFromServer() : Observable<List<Shirt>>?
     {
@@ -173,11 +231,6 @@ class DataAccessLayer(context: Context) {
     private fun updateDataBase(shirt: Shirt)
     {
         shirtDao!!.insertShirt(shirt)
-    }
-
-    private fun updateDataBase(basket: Basket)
-    {
-        basketDao!!.insertBasket(basket)
     }
     //endregion
 
