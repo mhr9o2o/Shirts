@@ -11,9 +11,9 @@ class NetworkAccessLayer {
 
     //region URLs
     val schema = "https://"
-    val baseUrl = "interview.test.unwire.com"
-    val shirtsPath = "/shirts"
-    val orderPath = "/order"
+    val baseUrl = "interview.test.unwire.com/"
+    val shirtsPath = "shirts/"
+    val orderPath = "order/"
     //endregion
 
     //region Api Services
@@ -22,7 +22,7 @@ class NetworkAccessLayer {
     }
 
     val shirtsApiService by lazy {
-        ShirtsAPI.create(schema + baseUrl + shirtsPath)
+        ShirtsAPI.create(schema + baseUrl)
     }
     //endregion
 

@@ -45,6 +45,7 @@ def external = [
         rxandroid2              : "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}",
         retrofit                : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
         retrofitRxJavaAdapter   : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+        retrofitGsonConverter   : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
         gson                    : "com.google.code.gson:gson:${versions.gson}",
         glide                   : "com.github.bumptech.glide:glide:${versions.glide}",
         room                    : "android.arch.persistence.room:runtime:${versions.room}"

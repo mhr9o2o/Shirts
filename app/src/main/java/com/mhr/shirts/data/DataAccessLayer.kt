@@ -8,7 +8,6 @@ import com.mhr.shirts.data.database.dao.BasketDao
 import com.mhr.shirts.data.database.dao.ShirtDao
 import com.mhr.shirts.network.NetworkAccessLayer
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -238,7 +237,13 @@ class DataAccessLayer(context: Context) {
 
     private fun updateDataBase(shirt: Shirt)
     {
-        shirtDao!!.insertShirt(shirt)
+        disposables.add(Observable.fromCallable {
+            shirtDao!!.insertShirt(shirt)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe())
+
     }
     //endregion
 
