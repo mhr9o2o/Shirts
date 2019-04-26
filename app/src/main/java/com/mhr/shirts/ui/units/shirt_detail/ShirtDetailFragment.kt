@@ -17,6 +17,7 @@ class ShirtDetailFragment : Fragment() {
 
     private lateinit var viewModel: ShirtDetailViewModel
 
+    //region Overridden Functions
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,5 +30,6 @@ class ShirtDetailFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ShirtDetailViewModel::class.java)
         // TODO: Use the ViewModel
     }
+    //endregion
 
 }
