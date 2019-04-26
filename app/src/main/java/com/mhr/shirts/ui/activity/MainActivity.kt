@@ -3,7 +3,9 @@ package com.mhr.shirts.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.mhr.shirts.R
 import com.mhr.shirts.data.DataAccessLayer
 import com.mhr.shirts.di.DaggerDataComponent
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     {
         DaggerDataComponent.builder()
             .context(this)
-            .build()
+            .build().inject(this)
     }
     //endregion
 }

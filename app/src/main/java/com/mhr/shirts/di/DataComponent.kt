@@ -1,6 +1,9 @@
 package com.mhr.shirts.di
 
 import com.mhr.shirts.ui.activity.MainActivity
+import com.mhr.shirts.ui.units.basket.BasketModel
+import com.mhr.shirts.ui.units.shirt_detail.ShirtDetailModel
+import com.mhr.shirts.ui.units.shirts.ShirtsModel
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -10,6 +13,9 @@ import javax.inject.Singleton
 interface DataComponent {
 
     fun inject(mainActivity: MainActivity)
+    fun inject(basketModel: BasketModel)
+    fun inject(shirtsModel: ShirtsModel)
+    fun inject(shirtDetailModel: ShirtDetailModel)
 
     @Component.Builder
     interface Builder
