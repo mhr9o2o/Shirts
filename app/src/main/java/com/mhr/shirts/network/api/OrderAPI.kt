@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 interface OrderAPI {
 
-    @POST("/jayson")
+    @POST("/order")
     fun orderBasket(@Body order: OrderRequest): Observable<SuccessfulOrderResponse>
 
     companion object

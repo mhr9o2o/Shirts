@@ -2,6 +2,7 @@ package com.mhr.shirts.ui.units.basket
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,18 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
     private fun initListeners()
     {
         rootView.findViewById<AppCompatButton>(R.id.fragment_basket_order_button).setOnClickListener {
-            //TODO request order
+            disposables.add(
+                viewModel.orderBasket().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            //TODO Successful Snack
+                        },
+                        {
+                            //TODO Unsuccessful Snack
+                            Log.e("FAILED", it.message)
+                        }
+                    )
+            )
         }
 
         rootView.findViewById<RelativeLayout>(R.id.fragment_basket_topbar_layout).setOnClickListener {

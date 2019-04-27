@@ -7,6 +7,8 @@ import com.mhr.shirts.data.database.AppDataBase
 import com.mhr.shirts.data.database.dao.BasketDao
 import com.mhr.shirts.data.database.dao.ShirtDao
 import com.mhr.shirts.network.NetworkAccessLayer
+import com.mhr.shirts.network.models.request.OrderRequest
+import com.mhr.shirts.network.models.response.SuccessfulOrderResponse
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -29,7 +31,7 @@ class DataAccessLayer(context: Context) {
     //endregion
 
     //region Network
-    private var networkAccessLayer: NetworkAccessLayer? = null
+    private var networkAccessLayer: NetworkAccessLayer
     private val disposables: CompositeDisposable = CompositeDisposable()
     //endregion
 
@@ -194,6 +196,11 @@ class DataAccessLayer(context: Context) {
                 }
             ))
     }
+
+    fun orderBasket(basket: Basket, totalCost: Int) : Observable<SuccessfulOrderResponse>
+    {
+        return networkAccessLayer.orderBasket(OrderRequest(totalCost, basket))
+    }
     //endregion
 
     //endregion
@@ -201,7 +208,7 @@ class DataAccessLayer(context: Context) {
     //region Inner Data Functions
     private fun fetchShirtsFromServer() : Observable<List<Shirt>>?
     {
-        return networkAccessLayer?.fetchAllShirts()
+        return networkAccessLayer.fetchAllShirts()
     }
 
     private fun retrieveShirtsFromDataBase() : Observable<List<Shirt>>

@@ -4,6 +4,7 @@ import com.mhr.shirts.MyApplication
 import com.mhr.shirts.data.DataAccessLayer
 import com.mhr.shirts.data.data_models.Basket
 import com.mhr.shirts.data.data_models.Shirt
+import com.mhr.shirts.network.models.response.SuccessfulOrderResponse
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,6 +24,7 @@ class BasketModel {
     val totalCostSubject: PublishSubject<Int> = PublishSubject.create()
     val basketItemsSubject: PublishSubject<List<Shirt>> = PublishSubject.create()
     private lateinit var basket: Basket
+    private var totalCost = 0
     //endregion
 
     //region Functions
@@ -52,6 +54,13 @@ class BasketModel {
     {
         checkExistenceAndDelete(shirt, basket)
         updateBasket(basket)
+    }
+
+    fun order() : Observable<SuccessfulOrderResponse>
+    {
+        return dataAccessLayer.orderBasket(basket = basket, totalCost = totalCost).doOnNext {
+            clearBasket(basket)
+        }
     }
 
     protected fun getBasket() : Observable<Basket>
@@ -117,6 +126,7 @@ class BasketModel {
         {
             cost += (shirt.quantity?:0) * (shirt.price?:0)
         }
+        totalCost = cost
         totalCostSubject.onNext(cost)
     }
 

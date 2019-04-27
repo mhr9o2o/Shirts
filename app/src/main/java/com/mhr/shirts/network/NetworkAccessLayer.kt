@@ -1,5 +1,6 @@
 package com.mhr.shirts.network
 
+import com.google.gson.Gson
 import com.mhr.shirts.data.data_models.Shirt
 import com.mhr.shirts.network.api.OrderAPI
 import com.mhr.shirts.network.api.ShirtsAPI
@@ -18,7 +19,7 @@ class NetworkAccessLayer {
 
     //region Api Services
     val orderApiService by lazy {
-        OrderAPI.create(schema + baseUrl + orderPath)
+        OrderAPI.create(schema + baseUrl)
     }
 
     val shirtsApiService by lazy {

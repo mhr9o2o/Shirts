@@ -2,7 +2,7 @@ package com.mhr.shirts.network.models.response
 
 import com.mhr.shirts.data.data_models.Shirt
 
-data class SuccessfulOrderResponse(val id: Int? = 0, val total: Int? = 0, val status: String? = "", val shirts: List<Shirt>? = emptyList())
+data class SuccessfulOrderResponse(val id: String? = "", val total: Int? = 0, val status: String? = "", val shirts: List<Shirt>? = emptyList())
 {
     //region Overridden Functions
     override fun equals(other: Any?): Boolean {
@@ -17,7 +17,7 @@ data class SuccessfulOrderResponse(val id: Int? = 0, val total: Int? = 0, val st
     }
 
     override fun hashCode(): Int {
-        return id ?: 0
+        return id?.hashCode() ?: 0
     }
     //endregion
 }
