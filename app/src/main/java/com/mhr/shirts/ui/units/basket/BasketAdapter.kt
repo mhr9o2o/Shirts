@@ -1,6 +1,8 @@
 package com.mhr.shirts.ui.units.basket
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -9,12 +11,43 @@ import com.bumptech.glide.Glide
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
 
-class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItemInteractionsListener) {
+class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItemInteractionsListener) :
+    RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
+
+    //region Initializer
+    init {
+        /*
+        It helps item to retain their position after data change and just applies the changes to the content,
+        which avoids flashy ui updates
+         */
+        setHasStableIds(true)
+    }
+    //endregion
 
     //region Fields
     //endregion
 
     //region Overridden Functions
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketViewHolder {
+        return BasketViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_basket, parent, false))
+    }
+
+    override fun getItemCount(): Int {
+        return shirts.size
+    }
+
+    override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
+        holder.bindView(position)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return if (position != -1 && position < shirts.size) {
+            (shirts[position].id?:0).toLong()
+        } else {
+            super.getItemId(position)
+        }
+
+    }
     //endregion
 
     //region ViewHolder
