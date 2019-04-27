@@ -19,6 +19,10 @@
     <dimen name="size_basket_plus_button">48dp</dimen>
     <dimen name="size_basket_minus_button">48dp</dimen>
     <dimen name="size_basket_remove_button">48dp</dimen>
+    <dimen name="size_basket_image">64dp</dimen>
+    <dimen name="margin_start_basket_item_divider">72dp</dimen>
+    <dimen name="margin_side_basket_image">8dp</dimen>
+    <dimen name="padding_general_basket_acions_holder">8dp</dimen>
     <dimen name="padding_item_shirt_name">8dp</dimen>
     <!-- Text Sizes -->
     <dimen name="size_text_shirt_name">18sp</dimen>
