@@ -22,10 +22,21 @@
     <dimen name="size_basket_image">64dp</dimen>
     <dimen name="margin_start_basket_item_divider">72dp</dimen>
     <dimen name="margin_side_basket_image">8dp</dimen>
-    <dimen name="padding_general_basket_acions_holder">8dp</dimen>
+    <dimen name="padding_general_basket_actions_holder">8dp</dimen>
     <dimen name="padding_item_shirt_name">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
     <!-- Text Sizes -->
     <dimen name="size_text_shirt_name">18sp</dimen>
     <dimen name="size_text_shirt_price">14sp</dimen>
     <dimen name="size_text_shirt_size_colour">14sp</dimen>
+    <dimen name="size_text_small">14sp</dimen>
+    <dimen name="size_text_medium">18sp</dimen>
+    <dimen name="size_text_large">22sp</dimen>
 </resources>

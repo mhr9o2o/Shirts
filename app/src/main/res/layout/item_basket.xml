@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentEnd="true"
-            android:padding="@dimen/padding_general_basket_acions_holder"
+            android:padding="@dimen/padding_general_basket_actions_holder"
             android:layout_centerVertical="true">
 
         <androidx.appcompat.widget.AppCompatImageButton
