@@ -18,8 +18,8 @@ class ShirtDetailModel {
 
     //region Fields
     @Inject
-    lateinit var dataAccessLayer: DataAccessLayer
-    lateinit var basket: Basket
+    private lateinit var dataAccessLayer: DataAccessLayer
+    private lateinit var basket: Basket
     //endregion
 
     //region Functions
@@ -52,14 +52,11 @@ class ShirtDetailModel {
     {
         if (basket.shirts.contains(shirt))
         {
-            for (index in 0 until basket.shirts.size)
+            val index = basket.shirts.indexOf(shirt)
+            if (index != -1)
             {
-                if (basket.shirts[index] == shirt)
-                {
-                    val currentQuantity = basket.shirts[index].quantity?:0
-                    basket.shirts[index].quantity = currentQuantity + 1
-                    break
-                }
+                val currentQuantity = basket.shirts[index].quantity?:0
+                basket.shirts[index].quantity = currentQuantity + 1
             }
         }
         else

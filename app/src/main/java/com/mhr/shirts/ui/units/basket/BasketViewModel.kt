@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 class BasketViewModel : ViewModel() {
 
     //region Fields
+    val basketModel = BasketModel()
     //region
 
 }

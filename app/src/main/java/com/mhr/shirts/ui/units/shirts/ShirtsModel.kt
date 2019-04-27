@@ -14,7 +14,7 @@ class ShirtsModel {
 
     //region Fields
     @Inject
-    lateinit var dataAccessLayer: DataAccessLayer
+    private lateinit var dataAccessLayer: DataAccessLayer
     //endregion
 
     //region Functions
