@@ -63,7 +63,7 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
             }
             else if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
             {
-                BottomSheetBehavior.STATE_COLLAPSED
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
 

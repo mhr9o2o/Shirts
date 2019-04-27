@@ -15,13 +15,13 @@
     <dimen name="margin_bottom_shirt_detail_box_holder">16dp</dimen>
     <dimen name="margin_shirt_detail_box">8dp</dimen>
     <dimen name="padding_side_detail_texts">8dp</dimen>
-    <dimen name="height_basket_shirt_item">72dp</dimen>
+    <dimen name="height_basket_shirt_item">88dp</dimen>
     <dimen name="size_basket_plus_button">48dp</dimen>
     <dimen name="size_basket_minus_button">48dp</dimen>
     <dimen name="size_basket_remove_button">48dp</dimen>
     <dimen name="size_basket_image">64dp</dimen>
     <dimen name="margin_start_basket_item_divider">72dp</dimen>
-    <dimen name="margin_side_basket_image">8dp</dimen>
+    <dimen name="margin_side_basket_image">12dp</dimen>
     <dimen name="padding_general_basket_actions_holder">8dp</dimen>
     <dimen name="padding_item_shirt_name">8dp</dimen>
     <dimen name="padding_small">4dp</dimen>
