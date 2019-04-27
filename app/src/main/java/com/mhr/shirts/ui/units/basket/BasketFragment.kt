@@ -9,7 +9,9 @@ import android.view.ViewGroup
 
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class BasketFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class BasketFragment : Fragment() {
     private lateinit var viewModel: BasketViewModel
     private val disposables = CompositeDisposable()
     private lateinit var shirts: MutableList<Shirt>
+    private lateinit var totalCostTextSchema: String
     //region Views
     //endregion
 
@@ -47,9 +50,26 @@ class BasketFragment : Fragment() {
 
     }
 
-    private fun bind()
+    private fun updateTotalCost(cost: Int)
     {
 
+    }
+
+    private fun bind()
+    {
+        disposables.add(
+            viewModel.getBasketItems().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    adjustDataOnList(it)
+                }
+        )
+
+        disposables.add(
+            viewModel.getTotalCost().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    updateTotalCost(it)
+                }
+        )
     }
 
     private fun unBind()
