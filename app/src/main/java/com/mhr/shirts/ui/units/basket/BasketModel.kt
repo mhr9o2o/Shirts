@@ -19,7 +19,7 @@ class BasketModel {
 
     //region Fields
     @Inject
-    private lateinit var dataAccessLayer: DataAccessLayer
+    lateinit var dataAccessLayer: DataAccessLayer
     val totalCostSubject: PublishSubject<Int> = PublishSubject.create()
     val basketItemsSubject: PublishSubject<List<Shirt>> = PublishSubject.create()
     private lateinit var basket: Basket
@@ -31,6 +31,7 @@ class BasketModel {
         return getBasket().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 basket = it
+                updateTotalCost(basket)
                 basketItemsSubject.onNext(basket.shirts)
             }
     }
@@ -121,8 +122,6 @@ class BasketModel {
 
     protected fun updateBasket(basket: Basket)
     {
-        updateBasket(basket)
-        updateTotalCost(basket)
         dataAccessLayer.updateDataBasket(basket)
     }
 

@@ -18,7 +18,7 @@ class ShirtDetailModel {
 
     //region Fields
     @Inject
-    private lateinit var dataAccessLayer: DataAccessLayer
+    lateinit var dataAccessLayer: DataAccessLayer
     private lateinit var basket: Basket
     //endregion
 
