@@ -7,4 +7,5 @@ import com.google.gson.annotations.Expose
 @Entity
 data class Basket(
     @PrimaryKey val id: Int = 0,
-    @Expose val shirts: List<Shirt> = emptyList())
+    @Expose val shirts: MutableList<Shirt> = mutableListOf()
+)

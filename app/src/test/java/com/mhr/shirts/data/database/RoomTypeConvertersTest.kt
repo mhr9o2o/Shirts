@@ -9,7 +9,7 @@ class RoomTypeConvertersTest {
 
     @Test
     fun fromEmptyShirtList() {
-        val shirts: List<Shirt> = emptyList()
+        val shirts: MutableList<Shirt> = mutableListOf()
         val expectedJson = "[]"
         assertEquals(expectedJson, RoomTypeConverters.fromShirtList(shirts))
     }
@@ -18,7 +18,7 @@ class RoomTypeConvertersTest {
     fun fromShirtList()
     {
         val shirt = Shirt(0, "", 10, "", 1, "", "")
-        val shirts = listOf(shirt)
+        val shirts = mutableListOf(shirt)
         val expectedJson = "[{\"id\":0,\"name\":\"\",\"price\":10,\"colour\":\"\",\"quantity\":1,\"size\":\"\",\"picture\":\"\"}]"
         assertEquals(expectedJson, RoomTypeConverters.fromShirtList(shirts))
     }

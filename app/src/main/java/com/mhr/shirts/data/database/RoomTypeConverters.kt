@@ -11,7 +11,7 @@ class RoomTypeConverters {
     {
         @TypeConverter
         @JvmStatic
-        fun fromShirtList(shirts: List<Shirt>): String
+        fun fromShirtList(shirts: MutableList<Shirt>): String
         {
             val gson = Gson()
             return gson.toJson(shirts)
@@ -19,7 +19,7 @@ class RoomTypeConverters {
 
         @TypeConverter
         @JvmStatic
-        fun toShirtList(json: String): List<Shirt>
+        fun toShirtList(json: String): MutableList<Shirt>
         {
             val gson = Gson()
             val shirtsListType = object : TypeToken<List<Shirt>>() {}.type

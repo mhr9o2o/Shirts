@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.lang.NullPointerException
 
 class DataAccessLayer(context: Context) {
 
@@ -146,7 +147,16 @@ class DataAccessLayer(context: Context) {
                     basket.onNext(it)
                 },
                 {
-                    it.message?.let { message -> errors.onNext(message) }
+                    if (it is NullPointerException)
+                    {
+                        val basket = Basket()
+                        updateDataBasket(basket)
+                    }
+                    else
+                    {
+                        it.message?.let { message -> errors.onNext(message) }
+                    }
+
                 }
             ))
     }
@@ -177,13 +187,12 @@ class DataAccessLayer(context: Context) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    this.basket.onNext(Basket())
+                    this.basket.onNext(basket)
                 },
                 {
                     it.message?.let { message -> errors.onNext(message) }
                 }
             ))
-        basketDao!!.insertBasket(basket)
     }
     //endregion
 

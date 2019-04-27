@@ -29,7 +29,7 @@ class OrderRequestTest {
     @Test
     fun validityOfWrongTotal()
     {
-        val shirts = listOf(Shirt(0, "", 20, "", 2, "", ""))
+        val shirts = mutableListOf(Shirt(0, "", 20, "", 2, "", ""))
         val basket = Basket(0, shirts)
         val order = OrderRequest(10, basket)
         assertEquals(false, order.validate())
@@ -38,7 +38,7 @@ class OrderRequestTest {
     @Test
     fun validityOfCorrectTotal()
     {
-        val shirts = listOf(Shirt(0, "", 20, "", 2, "", ""))
+        val shirts = mutableListOf(Shirt(0, "", 20, "", 2, "", ""))
         val basket = Basket(0, shirts)
         val order = OrderRequest(20, basket)
         assertEquals(true, order.validate())

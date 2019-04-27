@@ -60,6 +60,14 @@ class ShirtDetailFragment : Fragment() {
         sizeTextView = rootView.findViewById(R.id.fragment_shirt_detail_size_text_view)
         colourTextView = rootView.findViewById(R.id.fragment_shirt_detail_colour_text_view)
         addToCartButton = rootView.findViewById(R.id.fragment_shirt_detail_add_button)
+        initActionListeners()
+    }
+
+    private fun initActionListeners()
+    {
+        addToCartButton.setOnClickListener {
+            viewModel.addShirtToBasket(shirt!!)
+        }
     }
 
     private fun adjustDataOnView(shirt: Shirt?)
@@ -113,6 +121,7 @@ class ShirtDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         shirt = arguments?.getParcelable("shirt")
         viewModel = ViewModelProviders.of(this).get(ShirtDetailViewModel::class.java)
+        disposables.add(viewModel.unitIsReady())
         adjustDataOnView(shirt)
     }
 

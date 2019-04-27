@@ -12,7 +12,7 @@ data class Shirt(
     @Expose val name: String?,
     @Expose val price: Int?,
     @Expose val colour: String?,
-    @Expose val quantity: Int?,
+    @Expose var quantity: Int?,
     @Expose val size: String?,
     @Expose val picture: String?) : Parcelable
 {
