@@ -19,29 +19,4 @@ class OrderRequestTest {
         assertEquals(expectedJson, convertedJson)
     }
 
-    @Test
-    fun validityOfEmptyOrder()
-    {
-        val order = OrderRequest(10, Basket())
-        assertEquals(false, order.validate())
-    }
-
-    @Test
-    fun validityOfWrongTotal()
-    {
-        val shirts = mutableListOf(Shirt(0, "", 20, "", 2, "", ""))
-        val basket = Basket(0, shirts)
-        val order = OrderRequest(10, basket)
-        assertEquals(false, order.validate())
-    }
-
-    @Test
-    fun validityOfCorrectTotal()
-    {
-        val shirts = mutableListOf(Shirt(0, "", 20, "", 2, "", ""))
-        val basket = Basket(0, shirts)
-        val order = OrderRequest(20, basket)
-        assertEquals(true, order.validate())
-    }
-
 }
