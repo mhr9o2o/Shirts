@@ -58,6 +58,7 @@ dependencies {
     kapt deps.kapt.daggerCompiler
 
     testImplementation deps.test.junit
+    testImplementation deps.test.mockito
     androidTestImplementation deps.test.instrumentationTestRunner
     androidTestImplementation deps.test.espresso
 }
