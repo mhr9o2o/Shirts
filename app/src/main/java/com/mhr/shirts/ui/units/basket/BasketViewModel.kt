@@ -12,19 +12,34 @@ class BasketViewModel : ViewModel() {
     private val basketModel = BasketModel()
     //region
 
-    //region Model-relation Functions
+    //region View-to-Model-relation Functions
     fun unitIsReady() : Disposable
     {
         return basketModel.fetchData()
     }
-    //endregion
 
-    //region View-relation Functions
-    fun orderBasket() : Observable<SuccessfulOrderResponse>
+    fun onShirtAdded(shirt: Shirt)
+    {
+        basketModel.addShirtToBasket(shirt)
+    }
+
+    fun onShirtRemoved(shirt: Shirt)
+    {
+        basketModel.removeShirtFromBasket(shirt)
+    }
+
+    fun onShirtDeleted(shirt: Shirt)
+    {
+        basketModel.deleteShirtFromBasket(shirt)
+    }
+
+    fun onOrderClicked() : Observable<SuccessfulOrderResponse>
     {
         return basketModel.order()
     }
+    //endregion
 
+    //region Model-to-View-relation Functions
     fun getBasketItems() : Observable<List<Shirt>>
     {
         return basketModel.basketItemsSubject

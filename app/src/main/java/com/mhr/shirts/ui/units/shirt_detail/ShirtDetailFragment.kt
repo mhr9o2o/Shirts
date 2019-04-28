@@ -2,7 +2,6 @@ package com.mhr.shirts.ui.units.shirt_detail
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +13,7 @@ import com.bumptech.glide.Glide
 
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_shirt_detail.*
 
 class ShirtDetailFragment : Fragment() {
 
@@ -66,7 +62,7 @@ class ShirtDetailFragment : Fragment() {
     private fun initActionListeners()
     {
         addToCartButton.setOnClickListener {
-            viewModel.addShirtToBasket(shirt!!)
+            viewModel.onAddToBasketClicked(shirt!!)
         }
     }
 

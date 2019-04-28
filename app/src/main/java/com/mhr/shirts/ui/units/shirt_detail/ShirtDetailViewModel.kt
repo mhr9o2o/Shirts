@@ -13,18 +13,20 @@ class ShirtDetailViewModel : ViewModel() {
     private val shirtDetailModel = ShirtDetailModel()
     //endregion
 
-    //region Model-relation Functions
+    //region View-to-Model-relation Functions
     fun unitIsReady() : Disposable
     {
         return shirtDetailModel.fetchData()
     }
-    //endregion
 
-    //region View-relation Functions
-    fun addShirtToBasket(shirt: Shirt)
+    fun onAddToBasketClicked(shirt: Shirt)
     {
         shirtDetailModel.addShirtToBasket(shirt)
     }
+    //endregion
+
+    //region Model-to-View-relation Functions
+
     //endregion
 
 }

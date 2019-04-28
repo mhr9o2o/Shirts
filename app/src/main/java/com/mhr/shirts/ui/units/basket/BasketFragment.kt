@@ -55,7 +55,7 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
     {
         rootView.findViewById<AppCompatButton>(R.id.fragment_basket_order_button).setOnClickListener {
             disposables.add(
-                viewModel.orderBasket().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                viewModel.onOrderClicked().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
                             //TODO Successful Snack
@@ -156,15 +156,15 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
 
     //region Callbacks Implementation
     override fun onAddButtonClickedFor(shirt: Shirt) {
-
+        viewModel.onShirtAdded(shirt)
     }
 
     override fun onRemoveButtonClickedFor(shirt: Shirt) {
-
+        viewModel.onShirtRemoved(shirt)
     }
 
     override fun onDeleteButtonClickedFor(shirt: Shirt) {
-
+        viewModel.onShirtDeleted(shirt)
     }
     //endregion
 

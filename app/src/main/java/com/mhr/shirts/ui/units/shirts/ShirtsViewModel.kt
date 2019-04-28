@@ -14,7 +14,21 @@ class ShirtsViewModel : ViewModel() {
     private val filterSubject: BehaviorSubject<ShirtFilter> = BehaviorSubject.create()
     //endregion
 
-    //region Model-relation Functions
+    //region View-to-Model-relation Functions
+    fun onSizeSet(size: String)
+    {
+        val colour = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).colour
+        filterSubject.onNext(ShirtFilter(size, colour))
+    }
+
+    fun onColourSet(colour: String)
+    {
+        val size = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).size
+        filterSubject.onNext(ShirtFilter(size, colour))
+    }
+    //endregion
+
+    //region Model-to-View-relation Functions
     fun getShirts() : Observable<List<Shirt>>
     {
         return shirtsModel.getShirts()
@@ -23,20 +37,6 @@ class ShirtsViewModel : ViewModel() {
     fun getFilteredShirts() : Observable<List<Shirt>>
     {
         return filterSubject.observeOn(Schedulers.computation()).flatMap(shirtsModel::filterShirts)
-    }
-    //endregion
-
-    //region View-relation Functions
-    fun setSizeFilter(size: String)
-    {
-        val colour = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).colour
-        filterSubject.onNext(ShirtFilter(size, colour))
-    }
-
-    fun setColourFilter(colour: String)
-    {
-        val size = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).size
-        filterSubject.onNext(ShirtFilter(size, colour))
     }
     //endregion
 
