@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
     private lateinit var rootNavController: NavController
     private var snackbar: Snackbar? = null
-    private val disposables = CompositeDisposable()
+    private lateinit var disposables : CompositeDisposable
     //endregion
 
     //region Overridden Functions
@@ -122,6 +122,9 @@ class MainActivity : AppCompatActivity() {
      * Subscribes to subjects/observables
      */
     private fun bind() {
+
+        disposables = CompositeDisposable()
+
         disposables.add(dataAccessLayer.errors.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 showGeneralErrorSnack(it)

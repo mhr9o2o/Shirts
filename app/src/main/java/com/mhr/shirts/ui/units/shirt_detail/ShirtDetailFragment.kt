@@ -27,7 +27,7 @@ class ShirtDetailFragment : Fragment() {
     }
 
     private lateinit var viewModel: ShirtDetailViewModel
-    private val disposables = CompositeDisposable()
+    private lateinit var disposables: CompositeDisposable
     private var shirt: Shirt? = null
 
     //region Views
@@ -43,7 +43,8 @@ class ShirtDetailFragment : Fragment() {
 
     //region Functions
     private fun bind() {
-
+        disposables = CompositeDisposable()
+        disposables.add(viewModel.unitIsReady())
     }
 
     private fun unBind() {
@@ -111,7 +112,6 @@ class ShirtDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         shirt = arguments?.getParcelable("shirt")
         viewModel = ViewModelProviders.of(this).get(ShirtDetailViewModel::class.java)
-        disposables.add(viewModel.unitIsReady())
         adjustDataOnView(shirt)
     }
 

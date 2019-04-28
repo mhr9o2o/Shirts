@@ -38,7 +38,7 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
     }
 
     private lateinit var viewModel: BasketViewModel
-    private val disposables = CompositeDisposable()
+    private lateinit var disposables: CompositeDisposable
     private lateinit var shirts: MutableList<Shirt>
     private lateinit var adapter: BasketAdapter
     private lateinit var totalCostTextSchema: String
@@ -129,7 +129,15 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
             snackbar.view.setBackgroundColor(backgroundColor)
             snackbar.setActionTextColor(actionColor)
             snackbar.setAction(R.string.try_again) {
-                viewModel.onOrderClicked()
+                disposables.add(viewModel.onOrderClicked().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            showSuccessSnack()
+                        },
+                        {
+                            showErrorSnack(it.message!!)
+                        }
+                    ))
                 snackbar.dismiss()
             }
             snackbar.show()
@@ -158,6 +166,9 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
 
     private fun bind()
     {
+
+        disposables = CompositeDisposable()
+
         disposables.add(
             viewModel.getBasketItems().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -171,6 +182,9 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
                     updateTotalCost(it)
                 }
         )
+
+        disposables.add(viewModel.unitIsReady())
+
     }
 
     private fun unBind()
@@ -196,7 +210,6 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(BasketViewModel::class.java)
-        disposables.add(viewModel.unitIsReady())
     }
 
     override fun onResume() {

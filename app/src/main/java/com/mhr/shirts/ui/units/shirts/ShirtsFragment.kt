@@ -34,7 +34,7 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     }
 
     private lateinit var viewModel: ShirtsViewModel
-    private val disposables = CompositeDisposable()
+    private lateinit var disposables: CompositeDisposable
     private lateinit var shirts: MutableList<Shirt>
     private lateinit var adapter: ShirtsAdapter
     private lateinit var progressBar: ProgressBar
@@ -50,6 +50,9 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     //region Functions
     private fun bind()
     {
+
+        disposables = CompositeDisposable()
+
         disposables.add(
             viewModel.getShirts()
                 .subscribeOn(Schedulers.io())
