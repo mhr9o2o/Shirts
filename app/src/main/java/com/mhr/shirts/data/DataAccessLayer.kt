@@ -264,6 +264,12 @@ class DataAccessLayer(context: Context) {
     {
         disposables.clear()
     }
+
+    fun closeDataBase()
+    {
+        AppDataBase.killDataBase()
+        database?.close()
+    }
     //endregion
 
 }

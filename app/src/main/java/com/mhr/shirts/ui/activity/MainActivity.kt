@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         unBind()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        dataAccessLayer.closeDataBase()
+    }
+
     override fun onBackPressed() {
         if (bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED)
         {

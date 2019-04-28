@@ -4,11 +4,9 @@ import com.mhr.shirts.MyApplication
 import com.mhr.shirts.data.DataAccessLayer
 import com.mhr.shirts.data.data_models.Basket
 import com.mhr.shirts.data.data_models.Shirt
-import com.mhr.shirts.di.DaggerDataComponent
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.Mockito
 
 class BasketModelTest {
