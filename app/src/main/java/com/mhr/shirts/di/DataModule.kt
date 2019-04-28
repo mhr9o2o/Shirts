@@ -8,6 +8,9 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+/**
+ * Our Dagger Module which provides DataAccessLayer
+ */
 @Module
 class DataModule {
 
