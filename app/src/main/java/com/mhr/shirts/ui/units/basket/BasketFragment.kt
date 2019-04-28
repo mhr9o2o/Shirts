@@ -10,14 +10,17 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 
 class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener {
 
@@ -58,11 +61,10 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
                 viewModel.onOrderClicked().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            //TODO Successful Snack
+                            showSuccessSnack()
                         },
                         {
-                            //TODO Unsuccessful Snack
-                            Log.e("FAILED", it.message)
+                            showErrorSnack()
                         }
                     )
             )
@@ -79,6 +81,30 @@ class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener 
             }
         }
 
+    }
+
+    private fun showSuccessSnack()
+    {
+        val parent: ViewGroup = rootView.parent as ViewGroup
+        val snackbar = Snackbar.make(parent, R.string.success_order, Snackbar.LENGTH_SHORT)
+        var backgroundColor = ContextCompat.getColor(rootView.context, R.color.positive)
+        snackbar.view.setBackgroundColor(backgroundColor)
+        snackbar.show()
+    }
+
+    private fun showErrorSnack()
+    {
+        val parent: ViewGroup = rootView.parent as ViewGroup
+        val snackbar = Snackbar.make(parent, R.string.error_order, Snackbar.LENGTH_INDEFINITE)
+        var backgroundColor = ContextCompat.getColor(rootView.context, R.color.negative)
+        var actionColor = ContextCompat.getColor(rootView.context, R.color.colorPrimary)
+        snackbar.view.setBackgroundColor(backgroundColor)
+        snackbar.setActionTextColor(actionColor)
+        snackbar.setAction(R.string.try_again) {
+            viewModel.onOrderClicked()
+            snackbar.dismiss()
+        }
+        snackbar.show()
     }
 
     private fun initList()

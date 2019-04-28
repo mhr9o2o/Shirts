@@ -3,7 +3,12 @@
 
     <!-- Errors -->
     <string name="error_network">Unable to connect to the server!</string>
+    <string name="error_general">Something went wrong!</string>
+    <string name="error_order">Unable to send your order, please try again!</string>
     <string name="error_availability">No more available item to add! ☹</string>
+
+    <!-- Success -->
+    <string name="success_order">Your order has been sent successfully.</string>
     
     <!-- Actions-->
     <string name="action_retry">Retry</string>
@@ -23,5 +28,6 @@
     <string name="text_filter_size_title">Select your desired size</string>
     <string name="text_filter_colour_title">Select_your_desired_colour</string>
     <string name="text_no_item">No items has been found! ☹</string>
+    <string name="try_again">Try Again!</string>
 
 </resources>
