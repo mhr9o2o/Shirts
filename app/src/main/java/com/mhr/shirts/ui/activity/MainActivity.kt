@@ -1,12 +1,9 @@
 package com.mhr.shirts.ui.activity
 
-import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,6 +18,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+/**
+ * This is the beginning of the UI activities
+ * MainActivity contains our navigation controllers in order to handle back-stack
+ * Errors are generally handled here [except order-related errors] so MainActivity also has access to DataAccessLayer
+ */
 class MainActivity : AppCompatActivity() {
 
     //region Fields
@@ -43,32 +45,41 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Subscribes to disposables whenever the activity is resumed
+     */
     override fun onResume() {
         super.onResume()
         bind()
     }
 
-    override fun onStop() {
-        super.onStop()
+    /**
+     * Unsubscribes whenever the activity is paused
+     */
+    override fun onPause() {
+        super.onPause()
         dataAccessLayer.dispose()
         unBind()
     }
 
+    /**
+     * Closes the data base when activity is destroyed
+     */
     override fun onDestroy() {
         super.onDestroy()
         dataAccessLayer.closeDataBase()
     }
 
+    /**
+     * Checks if Basket bottom-sheet is open to collapse it firstly,
+     * then checks if root-navigation has any back-stack to navigate it up, and finally works as default [closes the app in our case]
+     */
     override fun onBackPressed() {
-        if (bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED)
-        {
-            if (!rootNavController.navigateUp())
-            {
+        if (bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
+            if (!rootNavController.navigateUp()) {
                 super.onBackPressed()
             }
-        }
-        else
-        {
+        } else {
             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
@@ -76,8 +87,10 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region Functions
-    private fun initViews()
-    {
+    /**
+     * Views and required listeners are being initialised here
+     */
+    private fun initViews() {
 
         rootNavController = Navigation.findNavController(this, R.id.activity_main_root_fragment)
 
@@ -98,13 +111,17 @@ class MainActivity : AppCompatActivity() {
         bottomSheetBehavior = behavior
     }
 
-    private fun initData()
-    {
+    /**
+     * Provides the DataAccessLayer by injecting it when the activity is created
+     */
+    private fun initData() {
         MyApplication.instance.dataComponent.inject(this)
     }
 
-    private fun bind()
-    {
+    /**
+     * Subscribes to subjects/observables
+     */
+    private fun bind() {
         disposables.add(dataAccessLayer.errors.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 showGeneralErrorSnack(it)
@@ -116,13 +133,18 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    private fun unBind()
-    {
+    /**
+     * Unsubscribes subjects/observables
+     */
+    private fun unBind() {
         disposables.clear()
     }
 
-    private fun showGeneralErrorSnack(message: String)
-    {
+    /**
+     * Creates and shows an error snack according to the given error message
+     * @param message Error message provided by DataAccessLayer
+     */
+    private fun showGeneralErrorSnack(message: String) {
         @StringRes val snackMessage = if (message == DataAccessLayer.networkErrorMessage) {
             R.string.error_network
         } else {
