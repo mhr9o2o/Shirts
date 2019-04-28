@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
@@ -31,6 +32,7 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     private lateinit var shirts: MutableList<Shirt>
     private lateinit var adapter: ShirtsAdapter
     private lateinit var progressBar: ProgressBar
+    private lateinit var emptyHolder: LinearLayout
     private lateinit var sizeFilterTextView: AppCompatTextView
     private lateinit var colourFilterTextView: AppCompatTextView
     private lateinit var sizeFilterTextSchema: String
@@ -84,6 +86,8 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
         colourFilterTextView.text = colourFilterTextSchema.replace(oldValue = "%v", newValue = ShirtFilter.FILTER_NONE_LITERAL_TEXT)
 
         progressBar = rootView.findViewById(R.id.fragment_shirts_progressbar)
+
+        emptyHolder = rootView.findViewById(R.id.fragment_shirts_empty_holder_layout)
 
         initListeners()
 
@@ -145,6 +149,16 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     private fun updateList(newList: List<Shirt>)
     {
         progressBar.visibility = View.INVISIBLE
+
+        if (newList.isEmpty())
+        {
+            emptyHolder.visibility = View.VISIBLE
+        }
+        else
+        {
+            emptyHolder.visibility = View.GONE
+        }
+
         shirts.clear()
         shirts.addAll(newList)
         adapter.notifyDataSetChanged()

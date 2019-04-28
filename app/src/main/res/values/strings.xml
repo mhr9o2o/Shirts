@@ -22,5 +22,6 @@
     <string name="text_filter_all">ALL</string>
     <string name="text_filter_size_title">Select your desired size</string>
     <string name="text_filter_colour_title">Select_your_desired_colour</string>
+    <string name="text_no_item">No items has been found! ☹</string>
 
 </resources>
