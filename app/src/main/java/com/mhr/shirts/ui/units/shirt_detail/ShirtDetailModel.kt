@@ -48,7 +48,7 @@ class ShirtDetailModel {
         dataAccessLayer.updateDataBasket(basket)
     }
 
-    private fun checkShirtExistenceAndUpdateTheBasket(shirt: Shirt, basket: Basket)
+    internal fun checkShirtExistenceAndUpdateTheBasket(shirt: Shirt, basket: Basket)
     {
         if (basket.shirts.contains(shirt))
         {
