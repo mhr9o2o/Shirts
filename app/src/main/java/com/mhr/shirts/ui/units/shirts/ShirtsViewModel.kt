@@ -29,6 +29,16 @@ class ShirtsViewModel : ViewModel() {
     //endregion
 
     //region Model-to-View-relation Functions
+    fun getAvailableSizeFilters() : List<String>
+    {
+        return shirtsModel.getSizes()
+    }
+
+    fun getAvailableColourFilters() : List<String>
+    {
+        return shirtsModel.getColours()
+    }
+
     fun getShirts() : Observable<List<Shirt>>
     {
         return shirtsModel.getShirts()
