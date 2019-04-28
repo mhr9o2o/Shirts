@@ -12,19 +12,21 @@ class ShirtsViewModel : ViewModel() {
     //region Fields
     private val shirtsModel = ShirtsModel()
     private val filterSubject: BehaviorSubject<ShirtFilter> = BehaviorSubject.create()
+    private var lastColour = ShirtFilter.FILTER_NONE_LITERAL_TEXT
+    private var lastSize = ShirtFilter.FILTER_NONE_LITERAL_TEXT
     //endregion
 
     //region View-to-Model-relation Functions
     fun onSizeSet(size: String)
     {
-        val colour = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).colour
-        filterSubject.onNext(ShirtFilter(size, colour))
+        lastSize = size
+        filterSubject.onNext(ShirtFilter(size, lastColour))
     }
 
     fun onColourSet(colour: String)
     {
-        val size = filterSubject.lastElement().blockingGet(ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)).size
-        filterSubject.onNext(ShirtFilter(size, colour))
+        lastColour = colour
+        filterSubject.onNext(ShirtFilter(lastSize, colour))
     }
     //endregion
 

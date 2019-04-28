@@ -1,5 +1,6 @@
 package com.mhr.shirts.ui.units.shirts
 
+import android.content.DialogInterface
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +35,8 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     private lateinit var colourFilterTextView: AppCompatTextView
     private lateinit var sizeFilterTextSchema: String
     private lateinit var colourFilterTextSchema: String
+    private val sizesCharSequenceArray: ArrayList<CharSequence> = arrayListOf()
+    private var coloursCharSequenceArray: ArrayList<CharSequence> = arrayListOf()
     //endregion
 
     //region Functions
@@ -44,6 +48,7 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     updateList(it)
+                    updateFilterArrays()
                 }
         )
 
@@ -80,11 +85,66 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
 
         progressBar = rootView.findViewById(R.id.fragment_shirts_progressbar)
 
+        initListeners()
+
+    }
+
+    private fun initListeners()
+    {
+        sizeFilterTextView.setOnClickListener {
+
+            val mBuilder = AlertDialog.Builder(sizeFilterTextView.context)
+            val sizes: Array<CharSequence> = sizesCharSequenceArray.toTypedArray()
+            mBuilder.setTitle(R.string.text_filter_size_title)
+            mBuilder.setSingleChoiceItems(sizes, -1) { dialogInterface, i ->
+                progressBar.visibility = View.VISIBLE
+                sizeFilterTextView.text = sizeFilterTextSchema.replace(oldValue = "%v", newValue = sizesCharSequenceArray[i].toString())
+                viewModel.onSizeSet(sizesCharSequenceArray[i].toString())
+                dialogInterface.dismiss()
+            }
+
+            mBuilder.create().show()
+
+        }
+
+        colourFilterTextView.setOnClickListener {
+            val mBuilder = AlertDialog.Builder(colourFilterTextView.context)
+            val colours: Array<CharSequence> = coloursCharSequenceArray.toTypedArray()
+            mBuilder.setTitle(R.string.text_filter_colour_title)
+            mBuilder.setSingleChoiceItems(colours, -1) { dialogInterface, i ->
+                progressBar.visibility = View.VISIBLE
+                colourFilterTextView.text = colourFilterTextSchema.replace(oldValue = "%v", newValue = coloursCharSequenceArray[i].toString())
+                viewModel.onColourSet(coloursCharSequenceArray[i].toString())
+                dialogInterface.dismiss()
+            }
+
+            mBuilder.create().show()
+
+        }
+
+    }
+
+    private fun updateFilterArrays()
+    {
+        sizesCharSequenceArray.clear()
+        sizesCharSequenceArray.add(ShirtFilter.FILTER_NONE_LITERAL_TEXT)
+        for (size in viewModel.getAvailableSizeFilters())
+        {
+            sizesCharSequenceArray.add(size)
+        }
+
+        coloursCharSequenceArray.clear()
+        coloursCharSequenceArray.add(ShirtFilter.FILTER_NONE_LITERAL_TEXT)
+        for (colour in viewModel.getAvailableColourFilters())
+        {
+            coloursCharSequenceArray.add(colour)
+        }
+
     }
 
     private fun updateList(newList: List<Shirt>)
     {
-        progressBar.visibility = View.GONE
+        progressBar.visibility = View.INVISIBLE
         shirts.clear()
         shirts.addAll(newList)
         adapter.notifyDataSetChanged()

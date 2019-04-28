@@ -9,6 +9,7 @@ import com.mhr.shirts.data.database.dao.ShirtDao
 import com.mhr.shirts.network.NetworkAccessLayer
 import com.mhr.shirts.network.models.request.OrderRequest
 import com.mhr.shirts.network.models.response.SuccessfulOrderResponse
+import com.mhr.shirts.ui.units.shirts.ShirtFilter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -49,13 +50,6 @@ class DataAccessLayer(context: Context) {
     }
     //endregion
 
-    //region Static Identifiers
-    companion object
-    {
-        const val FILTER_NONE = "None"
-    }
-    //endregion
-
     //region Access Functions
 
     //region Shirts
@@ -80,11 +74,11 @@ class DataAccessLayer(context: Context) {
 
     fun filterShirts(size: String, colour: String)
     {
-        if (size == FILTER_NONE && colour == FILTER_NONE)
+        if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT && colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
         {
             fetchAndPublishShirtsFromDataBase(false)
         }
-        else if (size == FILTER_NONE)
+        else if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
         {
             disposables.add(Observable.fromCallable {
                 database!!.shirtDao().filterShirtsByColour(colour)
@@ -100,7 +94,7 @@ class DataAccessLayer(context: Context) {
                     }
                 ))
         }
-        else if (colour == FILTER_NONE)
+        else if (colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
         {
             disposables.add(Observable.fromCallable {
                 database!!.shirtDao().filterShirtsBySize(size)

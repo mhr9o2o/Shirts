@@ -34,7 +34,7 @@ class ShirtsModel {
         return dataAccessLayer.colours
     }
 
-    fun filterShirts(filter: ShirtFilter = ShirtFilter(DataAccessLayer.FILTER_NONE, DataAccessLayer.FILTER_NONE)) : Observable<List<Shirt>>
+    fun filterShirts(filter: ShirtFilter = ShirtFilter(ShirtFilter.FILTER_NONE_LITERAL_TEXT,ShirtFilter.FILTER_NONE_LITERAL_TEXT)) : Observable<List<Shirt>>
     {
         dataAccessLayer.filterShirts(filter.size, filter.colour)
         return dataAccessLayer.shirts
