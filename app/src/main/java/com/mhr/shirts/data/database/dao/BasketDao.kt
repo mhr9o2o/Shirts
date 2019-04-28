@@ -3,6 +3,10 @@ package com.mhr.shirts.data.database.dao
 import androidx.room.*
 import com.mhr.shirts.data.data_models.Basket
 
+/**
+ * Basket Data Access Object for Room
+ * It includes insertion, update, deletion and retrieving
+ */
 @Dao
 interface BasketDao {
 
