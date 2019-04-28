@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     private val disposables = CompositeDisposable()
     private lateinit var shirts: MutableList<Shirt>
     private lateinit var adapter: ShirtsAdapter
+    private lateinit var progressBar: ProgressBar
     private lateinit var sizeFilterTextView: AppCompatTextView
     private lateinit var colourFilterTextView: AppCompatTextView
     private lateinit var sizeFilterTextSchema: String
@@ -76,10 +78,13 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
         colourFilterTextSchema = colourFilterTextView.text.toString()
         colourFilterTextView.text = colourFilterTextSchema.replace(oldValue = "%v", newValue = ShirtFilter.FILTER_NONE_LITERAL_TEXT)
 
+        progressBar = rootView.findViewById(R.id.fragment_shirts_progressbar)
+
     }
 
     private fun updateList(newList: List<Shirt>)
     {
+        progressBar.visibility = View.GONE
         shirts.clear()
         shirts.addAll(newList)
         adapter.notifyDataSetChanged()
