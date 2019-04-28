@@ -267,8 +267,8 @@ class DataAccessLayer(context: Context) {
 
     fun closeDataBase()
     {
-        AppDataBase.killDataBase()
         database?.close()
+        AppDataBase.killDataBase()
     }
     //endregion
 
