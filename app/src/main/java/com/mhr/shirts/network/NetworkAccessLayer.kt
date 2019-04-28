@@ -1,6 +1,5 @@
 package com.mhr.shirts.network
 
-import com.google.gson.Gson
 import com.mhr.shirts.data.data_models.Shirt
 import com.mhr.shirts.network.api.OrderAPI
 import com.mhr.shirts.network.api.ShirtsAPI
@@ -8,13 +7,14 @@ import com.mhr.shirts.network.models.request.OrderRequest
 import com.mhr.shirts.network.models.response.SuccessfulOrderResponse
 import io.reactivex.Observable
 
+/**
+ * NetworkAccessLayer gives access to the APIs
+ */
 class NetworkAccessLayer {
 
     //region URLs
     val schema = "https://"
     val baseUrl = "interview.test.unwire.com/"
-    val shirtsPath = "shirts/"
-    val orderPath = "order/"
     //endregion
 
     //region Api Services
@@ -28,13 +28,19 @@ class NetworkAccessLayer {
     //endregion
 
     //region APIs
-    fun fetchAllShirts() : Observable<List<Shirt>>
-    {
+    /**
+     * Fetches shirts from the server
+     * @return result observable
+     */
+    fun fetchAllShirts(): Observable<List<Shirt>> {
         return shirtsApiService.fetchShirts()
     }
 
-    fun orderBasket(order: OrderRequest) : Observable<SuccessfulOrderResponse>
-    {
+    /**
+     * Orders basket to the server
+     * @return result observable
+     */
+    fun orderBasket(order: OrderRequest): Observable<SuccessfulOrderResponse> {
         return orderApiService.orderBasket(order)
     }
     //endregion

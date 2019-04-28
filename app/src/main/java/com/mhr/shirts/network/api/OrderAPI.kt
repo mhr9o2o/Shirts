@@ -9,6 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
+/**
+ * Retrofit Order API which creates order retrofit request
+ */
 interface OrderAPI {
 
     @POST("/order")

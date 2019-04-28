@@ -2,17 +2,22 @@ package com.mhr.shirts.network.models.response
 
 import com.mhr.shirts.data.data_models.Shirt
 
-data class SuccessfulOrderResponse(val id: String? = "", val total: Int? = 0, val status: String? = "", val shirts: List<Shirt>? = emptyList())
-{
+/**
+ * Successful Order Request's response
+ * The equality is checked by id
+ */
+data class SuccessfulOrderResponse(
+    val id: String? = "",
+    val total: Int? = 0,
+    val status: String? = "",
+    val shirts: List<Shirt>? = emptyList()
+) {
     //region Overridden Functions
     override fun equals(other: Any?): Boolean {
-        if (other is SuccessfulOrderResponse)
-        {
-            return other.id == id
-        }
-        else
-        {
-            return false;
+        return if (other is SuccessfulOrderResponse) {
+            other.id == id
+        } else {
+            false
         }
     }
 
