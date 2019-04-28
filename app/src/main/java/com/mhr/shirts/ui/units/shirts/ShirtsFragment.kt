@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 
@@ -26,6 +27,10 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
     private val disposables = CompositeDisposable()
     private lateinit var shirts: MutableList<Shirt>
     private lateinit var adapter: ShirtsAdapter
+    private lateinit var sizeFilterTextView: AppCompatTextView
+    private lateinit var colourFilterTextView: AppCompatTextView
+    private lateinit var sizeFilterTextSchema: String
+    private lateinit var colourFilterTextSchema: String
     //endregion
 
     //region Functions
@@ -62,6 +67,15 @@ class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
         adapter = ShirtsAdapter(shirts, this)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.fragment_shirts_recycler_view)
         recyclerView.adapter = adapter
+
+        sizeFilterTextView = rootView.findViewById(R.id.fragment_shirts_size_filter_text_view)
+        sizeFilterTextSchema = sizeFilterTextView.text.toString()
+        sizeFilterTextView.text = sizeFilterTextSchema.replace(oldValue = "%v", newValue = ShirtFilter.FILTER_NONE_LITERAL_TEXT)
+
+        colourFilterTextView = rootView.findViewById(R.id.fragment_shirts_colour_filter_text_view)
+        colourFilterTextSchema = colourFilterTextView.text.toString()
+        colourFilterTextView.text = colourFilterTextSchema.replace(oldValue = "%v", newValue = ShirtFilter.FILTER_NONE_LITERAL_TEXT)
+
     }
 
     private fun updateList(newList: List<Shirt>)
