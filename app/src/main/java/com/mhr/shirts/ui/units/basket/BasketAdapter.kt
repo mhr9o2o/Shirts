@@ -42,7 +42,7 @@ class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItem
 
     override fun getItemId(position: Int): Long {
         return if (position != -1 && position < shirts.size) {
-            (shirts[position].id?:0).toLong()
+            (shirts[position].id ?: 0).toLong()
         } else {
             super.getItemId(position)
         }
@@ -51,8 +51,7 @@ class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItem
     //endregion
 
     //region ViewHolder
-    inner class BasketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
+    inner class BasketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //region Views
         private val imageView: AppCompatImageView = itemView.findViewById(R.id.item_basket_image_view)
         private val nameTextView: AppCompatTextView = itemView.findViewById(R.id.item_basket_name_text_view)
@@ -65,22 +64,19 @@ class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItem
         init {
 
             addButton.setOnClickListener {
-                if (validatePosition(adapterPosition))
-                {
+                if (validatePosition(adapterPosition)) {
                     interactionListener.onAddButtonClickedFor(shirts[adapterPosition])
                 }
             }
 
             removeButton.setOnClickListener {
-                if (validatePosition(adapterPosition))
-                {
+                if (validatePosition(adapterPosition)) {
                     interactionListener.onRemoveButtonClickedFor(shirts[adapterPosition])
                 }
             }
 
             deleteButton.setOnClickListener {
-                if (validatePosition(adapterPosition))
-                {
+                if (validatePosition(adapterPosition)) {
                     interactionListener.onDeleteButtonClickedFor(shirts[adapterPosition])
                 }
             }
@@ -89,30 +85,24 @@ class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItem
         //endregion
 
         //region Functions
-        fun bindView(position: Int)
-        {
-            if (validatePosition(position))
-            {
+        fun bindView(position: Int) {
+            if (validatePosition(position)) {
                 val shirt = shirts[position]
 
                 imageView.setImageResource(R.color.colorAccent)
-                if (shirt.picture != null)
-                {
+                if (shirt.picture != null) {
                     Glide.with(imageView).load(shirt.picture).into(imageView)
                 }
 
                 nameTextView.text = "${shirt.name}\nCount: ${shirt.quantity}"
 
-            }
-            else
-            {
+            } else {
                 imageView.setImageResource(R.color.colorAccent)
                 nameTextView.text = ""
             }
         }
 
-        private fun validatePosition(position: Int) : Boolean
-        {
+        private fun validatePosition(position: Int): Boolean {
             return position != -1 && position < shirts.size
         }
         //endregion
@@ -120,8 +110,7 @@ class BasketAdapter(val shirts: List<Shirt>, val interactionListener: BasketItem
     //endregion
 
     //region Callbacks
-    interface BasketItemInteractionsListener
-    {
+    interface BasketItemInteractionsListener {
         fun onAddButtonClickedFor(shirt: Shirt)
         fun onRemoveButtonClickedFor(shirt: Shirt)
         fun onDeleteButtonClickedFor(shirt: Shirt)

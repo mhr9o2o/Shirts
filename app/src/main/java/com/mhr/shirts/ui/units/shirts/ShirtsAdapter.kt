@@ -12,6 +12,16 @@ import com.mhr.shirts.data.data_models.Shirt
 
 class ShirtsAdapter(private val shirts: List<Shirt>, private val shirtSelectListener: OnShirtSelectListener): RecyclerView.Adapter<ShirtsAdapter.ShirtViewHolder>() {
 
+    //region Initializer
+    init {
+        /*
+        It helps item to retain their position after data change and just applies the changes to the content,
+        which avoids flashy ui updates
+         */
+        setHasStableIds(true)
+    }
+    //endregion
+
     //region Overridden Functions
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShirtViewHolder {
         return ShirtViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_shirt, parent, false))

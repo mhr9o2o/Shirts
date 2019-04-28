@@ -6,6 +6,9 @@ import com.mhr.shirts.network.models.response.SuccessfulOrderResponse
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
+/**
+ * BasketViewModel acts as a connector between view [BasketFragment] and logic [BasketModel]
+ */
 class BasketViewModel : ViewModel() {
 
     //region Fields
@@ -13,40 +16,33 @@ class BasketViewModel : ViewModel() {
     //region
 
     //region View-to-Model-relation Functions
-    fun unitIsReady() : Disposable
-    {
+    fun unitIsReady(): Disposable {
         return basketModel.fetchData()
     }
 
-    fun onShirtAdded(shirt: Shirt)
-    {
+    fun onShirtAdded(shirt: Shirt) {
         basketModel.addShirtToBasket(shirt)
     }
 
-    fun onShirtRemoved(shirt: Shirt)
-    {
+    fun onShirtRemoved(shirt: Shirt) {
         basketModel.removeShirtFromBasket(shirt)
     }
 
-    fun onShirtDeleted(shirt: Shirt)
-    {
+    fun onShirtDeleted(shirt: Shirt) {
         basketModel.deleteShirtFromBasket(shirt)
     }
 
-    fun onOrderClicked() : Observable<SuccessfulOrderResponse>
-    {
+    fun onOrderClicked(): Observable<SuccessfulOrderResponse> {
         return basketModel.order()
     }
     //endregion
 
     //region Model-to-View-relation Functions
-    fun getBasketItems() : Observable<List<Shirt>>
-    {
+    fun getBasketItems(): Observable<List<Shirt>> {
         return basketModel.basketItemsSubject
     }
 
-    fun getTotalCost() : Observable<Int>
-    {
+    fun getTotalCost(): Observable<Int> {
         return basketModel.totalCostSubject
     }
     //endregion

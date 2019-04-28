@@ -20,6 +20,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * ShirtsFragment is view to the shirts unit.
+ * It presents the shirt items
+ * and delivers ui interactions to the [ShirtsViewModel] and notifies it of unit creation.
+ * Also implements [ShirtsAdapter.OnShirtSelectListener] to apply the filters on the shirts
+ */
 class ShirtsFragment : Fragment(), ShirtsAdapter.OnShirtSelectListener {
 
     //region Fields

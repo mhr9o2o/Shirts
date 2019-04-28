@@ -10,6 +10,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+/**
+ * ShirtDetailModel holds the business logic of shirt detail unit
+ */
 class ShirtDetailModel {
 
     init {
@@ -23,44 +26,35 @@ class ShirtDetailModel {
     //endregion
 
     //region Functions
-    fun fetchData() : Disposable
-    {
+    fun fetchData(): Disposable {
         return getBasket().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 basket = it
             }
     }
 
-    fun addShirtToBasket(shirt: Shirt)
-    {
+    fun addShirtToBasket(shirt: Shirt) {
         checkShirtExistenceAndUpdateTheBasket(shirt, basket)
         updateBasket(basket)
     }
 
-    private fun getBasket() : Observable<Basket>
-    {
+    private fun getBasket(): Observable<Basket> {
         dataAccessLayer.fetchBasket()
         return dataAccessLayer.basket
     }
 
-    private fun updateBasket(basket: Basket)
-    {
+    private fun updateBasket(basket: Basket) {
         dataAccessLayer.updateDataBasket(basket)
     }
 
-    internal fun checkShirtExistenceAndUpdateTheBasket(shirt: Shirt, basket: Basket)
-    {
-        if (basket.shirts.contains(shirt))
-        {
+    internal fun checkShirtExistenceAndUpdateTheBasket(shirt: Shirt, basket: Basket) {
+        if (basket.shirts.contains(shirt)) {
             val index = basket.shirts.indexOf(shirt)
-            if (index != -1)
-            {
-                val currentQuantity = basket.shirts[index].quantity?:0
+            if (index != -1) {
+                val currentQuantity = basket.shirts[index].quantity ?: 0
                 basket.shirts[index].quantity = currentQuantity + 1
             }
-        }
-        else
-        {
+        } else {
             shirt.quantity = 1
             basket.shirts.add(shirt)
         }

@@ -24,6 +24,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * BasketFragment is view to the basket unit.
+ * It presents the basket items, shows errors or success messages as snack
+ * and delivers ui interactions to the [BasketViewModel] and notifies it of unit creation.
+ * Also implements BasketItemInteractorListener to catch the Basket List items interactions.
+ */
 class BasketFragment : Fragment(), BasketAdapter.BasketItemInteractionsListener {
 
     //region Fields

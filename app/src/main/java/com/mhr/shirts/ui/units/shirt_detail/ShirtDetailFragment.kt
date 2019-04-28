@@ -1,20 +1,24 @@
 package com.mhr.shirts.ui.units.shirt_detail
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-
 import com.mhr.shirts.R
 import com.mhr.shirts.data.data_models.Shirt
 import io.reactivex.disposables.CompositeDisposable
 
+/**
+ * ShirtDetailFragment is view to the shirt detail unit.
+ * It presents the details of the selected shirt
+ * and delivers ui interactions to the [ShirtDetailViewModel]
+ */
 class ShirtDetailFragment : Fragment() {
 
     //region Fields
@@ -38,18 +42,15 @@ class ShirtDetailFragment : Fragment() {
     //endregion
 
     //region Functions
-    private fun bind()
-    {
+    private fun bind() {
 
     }
 
-    private fun unBind()
-    {
+    private fun unBind() {
         disposables.clear()
     }
 
-    private fun initViews(rootView: View)
-    {
+    private fun initViews(rootView: View) {
         imageView = rootView.findViewById(R.id.fragment_shirt_detail_image_view)
         nameTextView = rootView.findViewById(R.id.fragment_shirt_detail_name_text_view)
         priceTextView = rootView.findViewById(R.id.fragment_shirt_detail_price_text_view)
@@ -59,42 +60,35 @@ class ShirtDetailFragment : Fragment() {
         initActionListeners()
     }
 
-    private fun initActionListeners()
-    {
+    private fun initActionListeners() {
         addToCartButton.setOnClickListener {
             viewModel.onAddToBasketClicked(shirt!!)
         }
     }
 
-    private fun adjustDataOnView(shirt: Shirt?)
-    {
-        if (shirt != null)
-        {
+    private fun adjustDataOnView(shirt: Shirt?) {
+        if (shirt != null) {
             setImage(shirt.picture)
             nameTextView.text = shirt.name
-            priceTextView.text = priceTextView.text.toString().replace(oldValue = "%v", newValue = shirt.price.toString().toUpperCase(), ignoreCase = false)
-            sizeTextView.text = sizeTextView.text.toString().replace(oldValue = "%v", newValue = shirt.size.toString().toUpperCase(), ignoreCase = false)
-            colourTextView.text = colourTextView.text.toString().replace(oldValue = "%v", newValue = shirt.colour.toString().toUpperCase(), ignoreCase = false)
-        }
-        else
-        {
+            priceTextView.text = priceTextView.text.toString()
+                .replace(oldValue = "%v", newValue = shirt.price.toString().toUpperCase(), ignoreCase = false)
+            sizeTextView.text = sizeTextView.text.toString()
+                .replace(oldValue = "%v", newValue = shirt.size.toString().toUpperCase(), ignoreCase = false)
+            colourTextView.text = colourTextView.text.toString()
+                .replace(oldValue = "%v", newValue = shirt.colour.toString().toUpperCase(), ignoreCase = false)
+        } else {
             goBack()
         }
     }
 
-    private fun goBack()
-    {
+    private fun goBack() {
         activity?.onBackPressed()
     }
 
-    private fun setImage(url: String?)
-    {
-        if (url != null)
-        {
+    private fun setImage(url: String?) {
+        if (url != null) {
             Glide.with(imageView).load(url).into(imageView)
-        }
-        else
-        {
+        } else {
             imageView.setImageResource(R.color.colorAccent)
         }
     }

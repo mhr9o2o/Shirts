@@ -6,6 +6,9 @@ import com.mhr.shirts.data.data_models.Shirt
 import io.reactivex.Observable
 import javax.inject.Inject
 
+/**
+ * ShirtsModel holds the business logic of shirts unit
+ */
 class ShirtsModel {
 
     init {

@@ -1,12 +1,12 @@
 package com.mhr.shirts.ui.units.shirt_detail
 
-import androidx.lifecycle.ViewModel;
-import com.mhr.shirts.data.data_models.Basket
+import androidx.lifecycle.ViewModel
 import com.mhr.shirts.data.data_models.Shirt
-import com.mhr.shirts.ui.units.shirts.ShirtsModel
-import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
+/**
+ * ShirtDetailViewModel acts as a connector between view [ShirtDetailFragment] and logic [ShirtDetailModel]
+ */
 class ShirtDetailViewModel : ViewModel() {
 
     //region Fields
@@ -14,13 +14,11 @@ class ShirtDetailViewModel : ViewModel() {
     //endregion
 
     //region View-to-Model-relation Functions
-    fun unitIsReady() : Disposable
-    {
+    fun unitIsReady(): Disposable {
         return shirtDetailModel.fetchData()
     }
 
-    fun onAddToBasketClicked(shirt: Shirt)
-    {
+    fun onAddToBasketClicked(shirt: Shirt) {
         shirtDetailModel.addShirtToBasket(shirt)
     }
     //endregion
