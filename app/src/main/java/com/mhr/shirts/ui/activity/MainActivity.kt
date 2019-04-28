@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -25,10 +26,11 @@ class MainActivity : AppCompatActivity() {
     //region Fields
     @Inject
     lateinit var dataAccessLayer: DataAccessLayer
-    var bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED
-    var bottomSheetBehavior: BottomSheetBehavior<View>? = null
-    lateinit var rootNavController: NavController
-    val disposables = CompositeDisposable()
+    private var bottomSheetState: Int = BottomSheetBehavior.STATE_COLLAPSED
+    private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
+    private lateinit var rootNavController: NavController
+    private var snackbar: Snackbar? = null
+    private val disposables = CompositeDisposable()
     //endregion
 
     //region Overridden Functions
@@ -100,7 +102,12 @@ class MainActivity : AppCompatActivity() {
     {
         disposables.add(dataAccessLayer.errors.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                showGeneralErrorSnack()
+                showGeneralErrorSnack(it)
+            })
+
+        disposables.add(dataAccessLayer.shirts.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                snackbar?.dismiss()
             })
     }
 
@@ -109,18 +116,23 @@ class MainActivity : AppCompatActivity() {
         disposables.clear()
     }
 
-    private fun showGeneralErrorSnack()
+    private fun showGeneralErrorSnack(message: String)
     {
-        val snackbar = Snackbar.make(activity_main_root_view, R.string.error_general, Snackbar.LENGTH_INDEFINITE)
+        @StringRes val snackMessage = if (message == DataAccessLayer.networkErrorMessage) {
+            R.string.error_network
+        } else {
+            R.string.error_general
+        }
+        snackbar = Snackbar.make(activity_main_root_view, snackMessage, Snackbar.LENGTH_INDEFINITE)
         var backgroundColor = ContextCompat.getColor(this, R.color.negative)
         var actionColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        snackbar.view.setBackgroundColor(backgroundColor)
-        snackbar.setActionTextColor(actionColor)
-        snackbar.setAction(R.string.try_again) {
+        snackbar!!.view.setBackgroundColor(backgroundColor)
+        snackbar!!.setActionTextColor(actionColor)
+        snackbar!!.setAction(R.string.try_again) {
             dataAccessLayer.fetchShirts()
-            snackbar.dismiss()
+            snackbar!!.dismiss()
         }
-        snackbar.show()
+        snackbar!!.show()
     }
     //endregion
 }

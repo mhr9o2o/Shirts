@@ -19,6 +19,15 @@ import java.lang.NullPointerException
 
 class DataAccessLayer(context: Context) {
 
+    //region Static Constants
+    companion object
+    {
+        const val networkErrorMessage = "Network"
+        const val generalErrorMessage = "General"
+        const val emptyBasketErrorMessage = "Empty"
+    }
+    //endregion
+
     //region Subjects
     val shirts: PublishSubject<List<Shirt>> = PublishSubject.create()
     val basket: PublishSubject<Basket> = PublishSubject.create()
@@ -67,7 +76,7 @@ class DataAccessLayer(context: Context) {
                 shirts.onNext(it)
             },
             {
-                it.message?.let { message -> errors.onNext(message) }
+                errors.onNext(networkErrorMessage)
             }
         ))
     }
@@ -90,7 +99,7 @@ class DataAccessLayer(context: Context) {
                         shirts.onNext(it)
                     },
                     {
-                        it.message?.let { message -> errors.onNext(message) }
+                        errors.onNext(generalErrorMessage)
                     }
                 ))
         }
@@ -106,7 +115,7 @@ class DataAccessLayer(context: Context) {
                         shirts.onNext(it)
                     },
                     {
-                        it.message?.let { message -> errors.onNext(message) }
+                        errors.onNext(generalErrorMessage)
                     }
                 ))
         }
@@ -122,7 +131,7 @@ class DataAccessLayer(context: Context) {
                         shirts.onNext(it)
                     },
                     {
-                        it.message?.let { message -> errors.onNext(message) }
+                        errors.onNext(generalErrorMessage)
                     }
                 ))
         }
@@ -169,7 +178,7 @@ class DataAccessLayer(context: Context) {
                     this.basket.onNext(Basket())
                 },
                 {
-                    it.message?.let { message -> errors.onNext(message) }
+                    errors.onNext(generalErrorMessage)
                 }
             ))
     }
@@ -186,7 +195,7 @@ class DataAccessLayer(context: Context) {
                     this.basket.onNext(basket)
                 },
                 {
-                    it.message?.let { message -> errors.onNext(message) }
+                    errors.onNext(generalErrorMessage)
                 }
             ))
     }
@@ -223,7 +232,7 @@ class DataAccessLayer(context: Context) {
                 shirts.onNext(it)
             },
             {
-                it.message?.let { message -> errors.onNext(message) }
+                errors.onNext(generalErrorMessage)
             }
         ))
     }

@@ -58,9 +58,14 @@ class BasketModel {
 
     fun order() : Observable<SuccessfulOrderResponse>
     {
-        return dataAccessLayer.orderBasket(basket = basket, totalCost = totalCost).doOnNext {
-            clearBasket(basket)
+        return if (basket.shirts.isEmpty()) {
+            Observable.error(Throwable(DataAccessLayer.emptyBasketErrorMessage))
+        } else {
+            dataAccessLayer.orderBasket(basket = basket, totalCost = totalCost).doOnNext {
+                clearBasket(basket)
+            }
         }
+
     }
 
     protected fun getBasket() : Observable<Basket>
