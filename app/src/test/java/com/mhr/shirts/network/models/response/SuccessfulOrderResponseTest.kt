@@ -17,7 +17,7 @@ class SuccessfulOrderResponseTest {
     fun equalsForSameParamsExceptId()
     {
         val response1 = SuccessfulOrderResponse()
-        val response2 = SuccessfulOrderResponse(1, 0, "", emptyList())
+        val response2 = SuccessfulOrderResponse("order-id", 0, "", emptyList())
         assertEquals(false, response1 == response2)
     }
 
@@ -25,7 +25,7 @@ class SuccessfulOrderResponseTest {
     fun equalsForSameIdWithDifferentParams()
     {
         val response1 = SuccessfulOrderResponse()
-        val response2 = SuccessfulOrderResponse(0, 2, "pending", emptyList())
+        val response2 = SuccessfulOrderResponse("order-id", 2, "pending", emptyList())
         assertEquals(true, response1 == response2)
     }
 
@@ -33,7 +33,7 @@ class SuccessfulOrderResponseTest {
     fun convertingCorrectJsonToResponseModel()
     {
         val json = "{\n" +
-                "  \"id\": 0,\n" +
+                "  \"id\": \"order-id\",\n" +
                 "  \"total\": 0,\n" +
                 "  \"status\": \"string\",\n" +
                 "  \"shirts\": [\n" +
@@ -53,7 +53,7 @@ class SuccessfulOrderResponseTest {
         val response = gson.fromJson<SuccessfulOrderResponse>(json, SuccessfulOrderResponse::class.java)
 
         assertNotNull(response)
-        assertEquals(response.id, 0)
+        assertEquals(response.id, "order-id")
         assertEquals(response.total, 0)
         assertEquals(response.status, "string")
         assertNotNull(response.shirts)

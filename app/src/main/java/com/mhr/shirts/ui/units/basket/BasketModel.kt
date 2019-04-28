@@ -33,7 +33,7 @@ class BasketModel {
         return getBasket().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 basket = it
-                updateTotalCost(basket)
+                totalCostSubject.onNext(updateTotalCost(basket))
                 basketItemsSubject.onNext(basket.shirts)
             }
     }
@@ -68,13 +68,13 @@ class BasketModel {
 
     }
 
-    protected fun getBasket() : Observable<Basket>
+    private fun getBasket() : Observable<Basket>
     {
         dataAccessLayer.fetchBasket()
         return dataAccessLayer.basket
     }
 
-    protected fun checkExistenceThenAdd(shirt: Shirt, basket: Basket)
+    internal fun checkExistenceThenAdd(shirt: Shirt, basket: Basket)
     {
         if (basket.shirts.contains(shirt))
         {
@@ -92,7 +92,7 @@ class BasketModel {
         }
     }
 
-    protected fun removeIfPossibleOrDelete(shirt: Shirt, basket: Basket)
+    internal fun removeIfPossibleOrDelete(shirt: Shirt, basket: Basket)
     {
         if (basket.shirts.contains(shirt))
         {
@@ -111,7 +111,7 @@ class BasketModel {
         }
     }
 
-    protected fun checkExistenceAndDelete(shirt: Shirt, basket: Basket)
+    internal fun checkExistenceAndDelete(shirt: Shirt, basket: Basket)
     {
         if (basket.shirts.contains(shirt))
         {
@@ -119,28 +119,27 @@ class BasketModel {
         }
     }
 
-    protected fun delete(shirt: Shirt, basket: Basket)
+    internal fun delete(shirt: Shirt, basket: Basket)
     {
         basket.shirts.remove(shirt)
     }
 
-    protected fun updateTotalCost(basket: Basket)
+    internal fun updateTotalCost(basket: Basket) : Int
     {
-        var cost = 0
+        totalCost = 0
         for (shirt in basket.shirts)
         {
-            cost += (shirt.quantity?:0) * (shirt.price?:0)
+            totalCost += (shirt.quantity?:0) * (shirt.price?:0)
         }
-        totalCost = cost
-        totalCostSubject.onNext(cost)
+        return totalCost
     }
 
-    protected fun updateBasket(basket: Basket)
+    private fun updateBasket(basket: Basket)
     {
         dataAccessLayer.updateDataBasket(basket)
     }
 
-    protected fun clearBasket(basket: Basket)
+    private fun clearBasket(basket: Basket)
     {
         dataAccessLayer.clearBasket(basket)
     }

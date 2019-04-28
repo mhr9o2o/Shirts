@@ -59,6 +59,7 @@ dependencies {
 
     testImplementation deps.test.junit
     testImplementation deps.test.mockito
+    testImplementation deps.test.mockitoInLine
     androidTestImplementation deps.test.instrumentationTestRunner
     androidTestImplementation deps.test.espresso
 }
