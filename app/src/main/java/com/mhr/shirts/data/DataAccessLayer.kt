@@ -15,13 +15,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.lang.NullPointerException
 
+/**
+ * DataAccessLayer is responsible for all the data transitions in the app.
+ * It updates database, fetches data from it, fetches data from server and cache it,
+ * and finally publishes the changes through 3 main publish subjects: shirts, basket, errors
+ */
 class DataAccessLayer(context: Context) {
 
     //region Static Constants
-    companion object
-    {
+    companion object {
         const val networkErrorMessage = "Network"
         const val generalErrorMessage = "General"
         const val emptyBasketErrorMessage = "Empty"
@@ -62,8 +65,11 @@ class DataAccessLayer(context: Context) {
     //region Access Functions
 
     //region Shirts
-    fun fetchShirts()
-    {
+    /**
+     * first tries to fetch data from database if any is cached,
+     * then sends request to server to fetch the updated data and caches it
+     */
+    fun fetchShirts() {
 
         fetchAndPublishShirtsFromDataBase(true)
 
@@ -71,24 +77,28 @@ class DataAccessLayer(context: Context) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-            {
-                updateShirts(it, false)
-                shirts.onNext(it)
-            },
-            {
-                errors.onNext(networkErrorMessage)
-            }
-        ))
+                {
+                    updateShirts(it, false)
+                    shirts.onNext(it)
+                },
+                {
+                    errors.onNext(networkErrorMessage)
+                }
+            ))
     }
 
-    fun filterShirts(size: String, colour: String)
-    {
-        if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT && colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
-        {
+    /**
+     * Filters the shirts by given values
+     * @param size desired size
+     * @param colour desired colour
+     */
+    fun filterShirts(size: String, colour: String) {
+        // If both are "any", simply fetch all the data without any filter
+        if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT && colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT) {
             fetchAndPublishShirtsFromDataBase(false)
         }
-        else if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
-        {
+        // If just size is set, query on size
+        else if (size == ShirtFilter.FILTER_NONE_LITERAL_TEXT) {
             disposables.add(Observable.fromCallable {
                 database!!.shirtDao().filterShirtsByColour(colour)
             }
@@ -103,8 +113,8 @@ class DataAccessLayer(context: Context) {
                     }
                 ))
         }
-        else if (colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT)
-        {
+        // If just colour is set, query on colour
+        else if (colour == ShirtFilter.FILTER_NONE_LITERAL_TEXT) {
             disposables.add(Observable.fromCallable {
                 database!!.shirtDao().filterShirtsBySize(size)
             }
@@ -119,8 +129,8 @@ class DataAccessLayer(context: Context) {
                     }
                 ))
         }
-        else
-        {
+        // if both are set, query according to both size and colour
+        else {
             disposables.add(Observable.fromCallable {
                 database!!.shirtDao().filterShirtsByColourAndSize(colour, size)
             }
@@ -140,8 +150,10 @@ class DataAccessLayer(context: Context) {
     //endregion
 
     //region Basket
-    fun fetchBasket()
-    {
+    /**
+     * Retrieves basket data from data base
+     */
+    fun fetchBasket() {
         disposables.add(Observable.fromCallable {
             database!!.basketDao().getBasket()
         }
@@ -152,13 +164,10 @@ class DataAccessLayer(context: Context) {
                     basket.onNext(it)
                 },
                 {
-                    if (it is NullPointerException)
-                    {
+                    if (it is NullPointerException) {
                         val basket = Basket()
                         updateDataBasket(basket)
-                    }
-                    else
-                    {
+                    } else {
                         it.message?.let { message -> errors.onNext(message) }
                     }
 
@@ -166,8 +175,10 @@ class DataAccessLayer(context: Context) {
             ))
     }
 
-    fun clearBasket(basket: Basket)
-    {
+    /**
+     * Clears basket data from data-base [used when an order is successfully sent and we don't need the basket anymore]
+     */
+    fun clearBasket(basket: Basket) {
         disposables.add(Observable.fromCallable {
             database!!.basketDao().deleteBasket(basket)
         }
@@ -183,8 +194,10 @@ class DataAccessLayer(context: Context) {
             ))
     }
 
-    fun updateDataBasket(basket: Basket)
-    {
+    /**
+     * Updates the basket data in the database
+     */
+    fun updateDataBasket(basket: Basket) {
         disposables.add(Observable.fromCallable {
             database!!.basketDao().insertBasket(basket)
         }
@@ -200,8 +213,11 @@ class DataAccessLayer(context: Context) {
             ))
     }
 
-    fun orderBasket(basket: Basket, totalCost: Int) : Observable<SuccessfulOrderResponse>
-    {
+    /**
+     * Sends order request to the server
+     * @return request result observable [whether response or error]
+     */
+    fun orderBasket(basket: Basket, totalCost: Int): Observable<SuccessfulOrderResponse> {
         return networkAccessLayer.orderBasket(OrderRequest(totalCost, basket))
     }
     //endregion
@@ -209,46 +225,61 @@ class DataAccessLayer(context: Context) {
     //endregion
 
     //region Inner Data Functions
-    private fun fetchShirtsFromServer() : Observable<List<Shirt>>?
-    {
+    /**
+     * Retrieves shirts from the server
+     * @return request result observable [whether response or error]
+     */
+    private fun fetchShirtsFromServer(): Observable<List<Shirt>>? {
         return networkAccessLayer.fetchAllShirts()
     }
 
-    private fun retrieveShirtsFromDataBase() : Observable<List<Shirt>>
-    {
+    /**
+     * Retrieves shirts from the database
+     * @return request result observable [whether result or error]
+     */
+    private fun retrieveShirtsFromDataBase(): Observable<List<Shirt>> {
         return Observable.fromCallable {
             database!!.shirtDao().getShirts()
         }
     }
 
-    private fun fetchAndPublishShirtsFromDataBase(shouldUpdate: Boolean)
-    {
+    /**
+     * Fetches Shirts from data base and publishes its result [whether data or error]
+     * @param shouldUpdate indicating whether the related data [colours / sizes] needs to be updated or not.
+     */
+    private fun fetchAndPublishShirtsFromDataBase(shouldUpdate: Boolean) {
         disposables.add(retrieveShirtsFromDataBase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-            {
-                if (shouldUpdate) updateShirts(it, true)
-                shirts.onNext(it)
-            },
-            {
-                errors.onNext(generalErrorMessage)
-            }
-        ))
+                {
+                    if (shouldUpdate) updateShirts(it, true)
+                    shirts.onNext(it)
+                },
+                {
+                    errors.onNext(generalErrorMessage)
+                }
+            ))
     }
 
-    private fun updateShirts(shirts: List<Shirt>, isCachedData: Boolean)
-    {
-        for (shirt in shirts)
-        {
+    /**
+     * Updates sizes and colours and then updates the database if data is not cached
+     * @param shirts shirts to update data accordingly
+     * @param isCachedData indicates whether the given list is from cache or server
+     */
+    private fun updateShirts(shirts: List<Shirt>, isCachedData: Boolean) {
+        for (shirt in shirts) {
             if (!sizes.contains(shirt.size) && shirt.size != null) sizes.add(shirt.size)
             if (!colours.contains(shirt.colour) && shirt.colour != null) colours.add(shirt.colour)
             if (!isCachedData) updateDataBase(shirt)
         }
     }
 
-    private fun updateDataBase(shirt: Shirt)
-    {
+    /**
+     * Updates database with given data
+     * @param shirt given data
+     */
+    private fun updateDataBase(shirt: Shirt) {
         disposables.add(Observable.fromCallable {
             shirtDao!!.insertShirt(shirt)
         }
@@ -260,13 +291,17 @@ class DataAccessLayer(context: Context) {
     //endregion
 
     //region Lifecycle-wise Functions
-    fun dispose()
-    {
+    /**
+     * Unsubscribes
+     */
+    fun dispose() {
         disposables.clear()
     }
 
-    fun closeDataBase()
-    {
+    /**
+     * Closes the database
+     */
+    fun closeDataBase() {
         database?.close()
         AppDataBase.killDataBase()
     }
