@@ -6,9 +6,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mhr.shirts.data.data_models.Basket
 import com.mhr.shirts.data.data_models.Shirt
 import com.mhr.shirts.data.database.dao.BasketDao
 import com.mhr.shirts.data.database.dao.ShirtDao
+import junit.framework.Assert.assertNull
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -36,6 +38,7 @@ class AppDataBaseTest {
         database.close()
     }
 
+    //region Shirts
     @Test
     @Throws(Exception::class)
     fun writeAShirtAndRead()
@@ -133,5 +136,41 @@ class AppDataBaseTest {
         assertThat(smallBlueShirts.size, equalTo(0))
 
     }
+    //endregion
+
+    //region Basket
+    @Test
+    @Throws(Exception::class)
+    fun savingBasket()
+    {
+        val shirt = Shirt(0, "name", 20, "green", null, "s", "")
+        val basket = Basket(0, mutableListOf(shirt))
+
+        basketDao.insertBasket(basket)
+
+        val retrievedBasket = basketDao.getBasket()
+
+        assertThat(retrievedBasket, equalTo(basket))
+        assertThat(retrievedBasket.shirts.size, equalTo(1))
+        assertThat(retrievedBasket.shirts[0], equalTo(shirt))
+
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun deletingBasket()
+    {
+        val shirt = Shirt(0, "name", 20, "green", null, "s", "")
+        val basket = Basket(0, mutableListOf(shirt))
+
+        basketDao.insertBasket(basket)
+        basketDao.deleteBasket(basket)
+
+        val retrievedBasket = basketDao.getBasket()
+
+        assertNull(retrievedBasket)
+
+    }
+    //endregion
 
 }
