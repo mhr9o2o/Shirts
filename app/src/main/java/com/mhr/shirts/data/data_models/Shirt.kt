@@ -6,6 +6,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 
+/**
+ * Shirt Model data class, also used as Room entity
+ * Equality is checked just by id
+ * Model implements Parcelable as it needs to be serialized for being stored/transferred through bundles.
+ */
 @Entity
 data class Shirt(
     @Expose @PrimaryKey val id: Int?,
@@ -14,8 +19,8 @@ data class Shirt(
     @Expose val colour: String?,
     @Expose var quantity: Int?,
     @Expose val size: String?,
-    @Expose val picture: String?) : Parcelable
-{
+    @Expose val picture: String?
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -29,19 +34,17 @@ data class Shirt(
 
     //region Overridden Functions
     override fun equals(other: Any?): Boolean {
-        if (other is Shirt)
-        {
-            return this.id == other.id
-        }
-        else
-        {
-            return false
+        return if (other is Shirt) {
+            this.id == other.id
+        } else {
+            false
         }
     }
 
     override fun hashCode(): Int {
         return id ?: 0
     }
+
     //endregion
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
